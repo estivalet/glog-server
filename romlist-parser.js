@@ -7,6 +7,16 @@ var rd = readline.createInterface({
     console: false
 });
 
+var games = []
+
 rd.on('line', function(line) {
     console.log(line);
-})
+    var arr = line.split(";");
+    games.push({name:arr[0], title:arr[1]});
+});
+
+rd.on('close', function() {
+    var json = JSON.stringify(games);
+    console.log(json);
+});
+
