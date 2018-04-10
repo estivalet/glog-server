@@ -28,29 +28,6 @@ mongoose.connect(dbConfig.url)
 });
 
 
-app.get('/', function(req, res){
-    res.send('Hello GET');
-});
-
-app.get('/romlist/:system', function(req, res) {
-    res.send(req.params.system);
-});
-
-app.post('/', function(req, res){
-    res.send('Hello POST');
-});
-
-app.delete('/del_user', function(req, res) {
-    res.send('Page listing');
-})
-
-app.get('/list_user', function(req, res) {
-    res.send('Page listing');
-})
-
-app.get('/ab*cd', function(req, res) {
-    res.send('Page pattern match');
-})
 
 require('./app/routes/note.routes.js')(app);
 
