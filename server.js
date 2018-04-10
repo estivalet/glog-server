@@ -1,10 +1,39 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+
+// create express app
+const app = express();
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// Configuring the database
+const dbConfig = require('./config/database.config.js');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+// Connecting to the database
+mongoose.connect(dbConfig.url)
+.then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...');
+   // process.exit();
+});
+
+
 app.get('/', function(req, res){
     res.send('Hello GET');
+});
+
+app.get('/romlist/:system', function(req, res) {
+    res.send(req.params.system);
 });
 
 app.post('/', function(req, res){
@@ -23,9 +52,8 @@ app.get('/ab*cd', function(req, res) {
     res.send('Page pattern match');
 })
 
-var server = app.listen(8081, function() {
-    var host = server.address().address;
-    var port = server.address().port;
+require('./app/routes/note.routes.js')(app);
 
-    console.log("Example app listening at http://%s:%s", host, port);
+app.listen(8081, () => {
+    console.log("Server is listening on port 8081");
 });
