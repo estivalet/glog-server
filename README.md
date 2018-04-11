@@ -1,5 +1,13 @@
 "# glog-server" 
 
+- download mongodb in zip format
+- decompress it anywhere
+- create a "data" folder inside "bin" folder
+- open a command line in the bin folder
+- start it! mongod.exe --dbpath data
+
+use postman to test the API
+
 https://www.callicoder.com/node-js-express-mongodb-restful-crud-api-tutorial/
 
 git add .
