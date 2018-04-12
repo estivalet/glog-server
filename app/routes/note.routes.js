@@ -39,5 +39,14 @@ module.exports = (app) => {
     
     app.get('/ab*cd', function(req, res) {
         res.send('Page pattern match');
-    })    
+    })  
+    
+    app.get('/test', function(req, res) {
+        const fct = require('../../romlist-parser');
+        let promise = fct.myfunction('Atari 2600.txt');
+        return promise.then(result => {
+            console.log(result);
+           res.send(result);
+        });
+    })
 }
