@@ -1,0 +1,159 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em MAMEDB]
+
+  h1 Dynamic content
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following record counts:
+
+    ul
+      li #[strong Name:] #{data.machine.name}
+      li #[strong Source File:] !{data.machine.sourcefile}
+      li #[strong Is BIOS?:] !{data.machine.isbios}
+      li #[strong Is Device?:] !{data.machine.isdevice}
+      li #[strong Is Mechanical?:] !{data.machine.ismechanical}
+      li #[strong Runnable:] !{data.machine.runnable}
+      li #[strong Clone Of:] !{data.machine.cloneof}
+      li #[strong Rom Of:] !{data.machine.romof}
+      li #[strong Sample Of:] !{data.machine.sampleof}
+      li #[strong Description:] !{data.machine.description}
+      li #[strong Year:] !{data.machine.year}
+      li #[strong Manufacturer:] !{data.machine.manufacturer}
+
+    hr
+    h2 Biosset
+
+    each biosset in data.machine.biosset
+      li #{biosset.name} #{biosset.description} #{biosset.default}
+
+    hr
+    h2 Roms
+    each rom in data.machine.rom
+      li #{rom.name} #{rom.bios} #{rom.size} #{rom.crc} #{rom.sha1} #{rom.merge} #{rom.region} #{rom.offset} #{rom.status} #{rom.optional}
+
+    hr
+    h2 Disks
+    each disk in data.machine.disk
+      li #{disk.name} #{disk.sha1} #{disk.merge} #{disk.region} #{disk.index} #{disk.writable} #{disk.status} #{disk.optional}
+
+    hr
+    h2 Device Ref
+    each deviceref in data.machine.deviceref
+      li #{deviceref.name}
+    
+    hr
+    h2 Samples
+    each sample in data.machine.sample
+      li #{sample.name}
+
+
+    hr
+    h2 Chips
+    each chip in data.machine.chip
+      li #{chip.name} #{chip.tag} #{chip.type} #{chip.clock}
+
+    hr
+    h2 Displays
+    each display in data.machine.display
+      li #{display.tag} #{display.type} #{display.rotate} #{display.flipx} #{display.width} #{display.height} #{display.refresh} #{display.pixclock} #{display.htotal} #{display.hbend} #{display.hbstart} #{display.vtotal} #{display.vbend} #{display.vbstart}
+
+    hr
+    h2 Sounds
+    each sound in data.machine.sound
+      li #{sound.type}
+      each condition in sound.condition
+        ul #{condition.tag} #{condition.mask} #{condition.relation} #{condition.value}
+
+
+    hr
+    h2 Inputs
+    each input in data.machine.input
+      li #{input.service} #{input.tilt} #{input.players} #{input.coins}
+      each control in input.control
+        ul #{control.type} #{control.player} #{control.buttons} #{control.reqbuttons} #{control.minimum} #{control.maximum} #{control.sensitivity} #{control.keydelta} #{control.reverse} #{control.ways} #{control.ways2} #{control.ways3}
+
+
+    hr
+    h2 Dipswitches
+    each dipswitch in data.machine.dipswitch
+      table
+        tr
+           td #{dipswitch.name} 
+           td #{dipswitch.tag} 
+           td #{dipswitch.mask}
+        each diplocation in dipswitch.diplocation
+             li #{diplocation.name} 
+             li #{diplocation.number} 
+             li #{diplocation.inverted}
+
+        each dipvalue in dipswitch.dipvalue
+             li #{dipvalue.name} 
+             li #{dipvalue.value} 
+             li #{dipvalue.default}
+
+    hr
+    h2 Configuration
+    each configuration in data.machine.configuration
+      li #{configuration.name} #{configuration.tag} #{configuration.mask}
+      each conflocation in configuration.conflocation
+        li #{conflocation.name} #{conflocation.number} #{conflocation.inverted}
+      each confsetting in configuration.confsetting
+        li #{confsetting.name} #{confsetting.value} #{confsetting.default}
+
+    hr
+    h2 Ports
+    each port in data.machine.port
+      li #{port.tag}
+      each analog in port.analog
+        li #{analog.maks}
+
+    hr
+    h2 Adjuster
+    each adjuster in data.machine.adjuster
+      li #{adjuster.name} #{adjuster.default}
+
+    hr
+    h2 Driver
+    each driver in data.machine.driver
+      li #{driver.status} #{driver.emulation} #{driver.cocktail} #{driver.savestate}
+
+    hr
+    h2 Feature
+    each feature in data.machine.feature
+      li #{feature.type} #{feature.status} #{feature.overall}
+
+    hr
+    h2 Device
+    each device in data.machine.device
+      li #{device.type} #{device.tag} #{device.fixed_image} #{device.mandatory} #{device.interface}
+      each instance in device.instance
+        li #{instance.name} #{instance.briefname}
+      each extension in device.extension
+        li #{extension.name}
+
+    hr
+    h2 Slot
+    each slot in data.machine.slot
+      li #{slot.name}
+      each slotoption in slot.slotoption
+        li #{slotoption.name} #{slotoption.devname} #{slotoption.default}
+
+    hr
+    h2 Software List
+    each softwarelist in data.machine.softwarelist
+      li #{softwarelist.name} #{softwarelist.status} #{softwarelist.filter}
+
+    hr
+    h2 Ram Option
+    each ramoption in data.machine.ramoption
+      li #{ramoption.default}
+
+
+
+    hr
+    p !{data.machine}      
