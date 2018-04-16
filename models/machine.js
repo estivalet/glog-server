@@ -19,7 +19,7 @@ var MachineSchema = new Schema(
     biosset: [{
         name: {type: String},
         description: {type: String},
-        default: {type: String},
+        _default: {type: String},
     }],
     rom: [{
         name: {type: String},
@@ -112,7 +112,7 @@ var MachineSchema = new Schema(
         dipvalue: [{
             name: {type: String},
             value: {type: String},
-            default: {type: String},
+            _default: {type: String},
         }]
     }],
     configuration: [{
@@ -127,7 +127,7 @@ var MachineSchema = new Schema(
         confsetting: [{
             name: {type: String},
             value: {type: String},
-            default: {type: String},
+            _default: {type: String},
         }]
     }],
     port: [{
@@ -139,14 +139,14 @@ var MachineSchema = new Schema(
     }],
     adjuster: [{
         name: {type: String},
-        default: {type: String},
+        _default: {type: String},
     }],
-    driver: [{
+    driver: {
         status: {type: String},
         emulation: {type: String},
         cocktail: {type: String},
         savestate: {type: String},
-    }],
+    },
     feature: [{
         type: {type: String},
         status: {type: String},
@@ -171,7 +171,7 @@ var MachineSchema = new Schema(
         slotoption: [{
             name: {type: String},
             devname: {type: String},
-            default: {type: String},
+            _default: {type: String},
         }]
     }],
     softwarelist: [{
@@ -180,10 +180,15 @@ var MachineSchema = new Schema(
         filter: {type: String},
     }],
     ramoption: [{
-        default: {type: String},
+        _default: {type: String},
     }]
   }
 );
+
+MachineSchema.virtual('title').get(function () {
+    return this.description.substring(0, this.description.indexOf(' ('));
+});
+
 
 //Export model
 module.exports = mongoose.model('Machine', MachineSchema);

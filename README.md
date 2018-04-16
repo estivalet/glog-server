@@ -20,3 +20,8 @@ git -c "http.proxy=http://downloadupdates:D0wnl04d@wg-vip.trt4.gov.br:3128" push
 
 npm start
 npm run devstart
+
+Links used to develop mamedb:
+
+https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
+

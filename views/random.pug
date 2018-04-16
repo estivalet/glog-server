@@ -80,21 +80,23 @@ block content
 
     hr
     h2 Dipswitches
-    each dipswitch in data.machine.dipswitch
-      table
-        tr
-           td #{dipswitch.name} 
-           td #{dipswitch.tag} 
-           td #{dipswitch.mask}
-        each diplocation in dipswitch.diplocation
-             li #{diplocation.name} 
-             li #{diplocation.number} 
-             li #{diplocation.inverted}
 
+    table
+      th Description
+      th Settings
+      tr
+        td Coin A
+        td 1 Coin/2Credits
+    p
+
+    table
+      th Description
+      th Settings
+    each dipswitch in data.machine.dipswitch
+      tr
+        td #{dipswitch.name} #{dipswitch.tag} #{dipswitch.mask}
         each dipvalue in dipswitch.dipvalue
-             li #{dipvalue.name} 
-             li #{dipvalue.value} 
-             li #{dipvalue.default}
+          td #{dipvalue.name} #{dipvalue.value} #{dipvalue.default}
 
     hr
     h2 Configuration

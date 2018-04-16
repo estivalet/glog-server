@@ -13,6 +13,45 @@ exports.index = function(req, res) {
     });
 };
 
+exports.list = function(req, res) {
+    var perPage = 9
+    var page = req.params.page || 1
+
+    Machine
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, machines) {
+            Machine.count().exec(function(err, count) {
+                if (err) return next(err)
+                res.render('machines', {
+                    machines: machines,
+                    current: page,
+                    pages: Math.ceil(count / perPage)
+                })
+            })
+        })
+};
+
+exports.detail = function(req, res) {
+    async.parallel({
+        machine: function(callback) {
+            Machine.findById(req.params.id)
+              .populate('machine')
+              .exec(callback);
+        },
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.machine==null) { // No results.
+            var err = new Error('machine not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Successful, so render.
+        res.render('test', { title: 'Title', data:  results } );
+    });    
+}
+
 exports.random = function(req, res) {   
     
     async.parallel({
@@ -24,7 +63,7 @@ exports.random = function(req, res) {
             });
         },
     }, function(err, results) {
-        console.log(results.machine.rom);
-        res.render('random', { title: 'Mame Random Machine', error: err, data: results });
+        console.log(results.machine.dipswitch.dipvalue);
+        res.render('test', { title: 'Mame Random Machine', error: err, data: results });
     });
 };

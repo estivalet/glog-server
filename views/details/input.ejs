@@ -1,0 +1,44 @@
+<table class="table table-striped table-hover">
+    <caption>List of inputs</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>service</th>
+        <th>tilt</th>
+        <th>players</th>
+        <th>coins</th>
+        <th>controls</th>
+    </tr>
+    </thead>
+    <% data.machine.input.forEach(function(input) {%>
+        <tr>
+            <td>
+                <%=input.service%>
+            </td>
+            <td>
+                <%=input.tilt%>
+            </td>
+            <td>
+                <%=input.players%>
+            </td>
+            <td>
+                <%=input.coins%>
+            </td>
+            <td>
+                <% input.control.forEach(function(control){ %>
+                    <%=control.type%>
+                        <%=control.player%>
+                            <%=control.buttons%>
+                                <%=control.reqbuttons%>
+                                    <%=control.minimum%>
+                                        <%=control.maximum%>
+                                            <%=control.sensitivity%>
+                                                <%=control.keydelta%>
+                                                    <%=control.reverse%>
+                                                        <%=control.ways%>
+                                                            <%=control.ways2%>
+                                                                <%=control.ways3%>
+                                                                    <%}); %>
+            </td>
+        </tr>
+        <%}); %>
+</table>

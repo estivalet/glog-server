@@ -1,0 +1,23 @@
+<table class="table table-striped table-hover">
+    <caption>List of feature</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>type</th>
+        <th>status</th>
+        <th>overall</th>
+    </tr>
+    </thead>
+    <% data.machine.feature.forEach(function(feature) {%>
+        <tr>
+            <td>
+                <%=feature.type%>
+            </td>
+            <td>
+                <%=feature.status%>
+            </td>
+            <td>
+                <%=feature.overall%>
+            </td>
+        </tr>
+        <%}); %>
+</table>

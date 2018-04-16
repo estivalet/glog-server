@@ -1,0 +1,14 @@
+<table class="table table-striped table-hover">
+    <caption>List of device refs</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>Name</th>
+    </tr>
+    <% data.machine.sample.forEach(function(sample) {%>
+        <tr>
+            <td>
+                <%=sample.name%>
+            </td>
+        </tr>
+        <%});%>
+</table>

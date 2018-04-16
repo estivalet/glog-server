@@ -1,0 +1,25 @@
+<table class="table table-striped table-hover">
+    <caption>List of bios set</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% data.machine.biosset.forEach(function(biosset) {%>
+        <tr>
+            <td>
+                <%=biosset.name%>
+            </td>
+            <td>
+                <%=biosset.description%>
+            </td>
+            <td>
+                <%=biosset._default%>
+            </td>
+        </tr>
+        <%});%>
+    </tbody>            
+</table>

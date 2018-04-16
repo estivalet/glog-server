@@ -1,0 +1,14 @@
+<table class="table table-striped table-hover">
+    <caption>List of ramoption</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>_default</th>
+    </tr>
+    <% data.machine.ramoption.forEach(function(ramoption) {%>
+        <tr>
+            <td>
+                <%=ramoption._default%>
+            </td>
+        </tr>
+        <%}); %>
+</table>

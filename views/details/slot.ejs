@@ -1,0 +1,23 @@
+<table class="table table-striped table-hover">
+    <caption>List of slot</caption>
+    <thead class="thead-light">
+    <tr>
+        <th>name</th>
+        <th>option</th>
+    </tr>
+    </thead>
+    <% data.machine.slot.forEach(function(slot) {%>
+        <tr>
+            <td>
+                <%=slot.name%>
+            </td>
+            <td>
+                <% slot.slotoption.forEach(function(slotoption){ %>
+                    <%=slotoption.name%>
+                        <%=slotoption.devname%>
+                            <%=slotoption._default%>
+                                <%}); %>
+            </td>
+        </tr>
+        <%}); %>
+</table>

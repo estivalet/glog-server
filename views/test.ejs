@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+
+    <title>MAMEDB</title>
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+        input.hidden {
+            position: absolute;
+            left: -9999px;
+        }
+
+        #profile-image1 {
+            cursor: pointer;
+
+            width: 100px;
+            height: 100px;
+            border: 2px solid #03b1ce;
+        }
+
+        .tital {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .bot-border {
+            border-bottom: 1px #f8f8f8 solid;
+            margin: 5px 0 5px 0
+        }
+    </style>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>
+                            <%=data.machine.description%>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="box box-info">
+
+                            <div class="box-body">
+                                <div class="col-sm-6">
+                                    <div align="center"> <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                                            id="profile-image1" class="img-circle img-responsive">
+                                        <input id="profile-image-upload" class="hidden" type="file">
+                                        <div style="color:#999;">click here to change profile image</div>
+                                        <!--Upload Image Js And Css-->
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 style="color:#00b1b1;"><%=data.machine.title%></h4>
+                                    </span>
+                                    <span><p><%=data.machine.manufacturer%></p></span>
+                                    <span><p><%=data.machine.year%></p></span>
+                                    <span><p><%=data.machine.driver.status%></p></span>
+                                    <span><p><%=data.machine.driver.emulation%></p></span>
+                                    <span><p><%=data.machine.driver.cocktail%></p></span>
+                                    <span><p><%=data.machine.driver.savestate%></p></span>
+                                    
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr style="margin:5px 0 5px 0;">
+                                <div class="col-sm-5 col-xs-6 tital ">romset:</div>
+                                <div class="col-sm-7 col-xs-6 "><%=data.machine.name%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-5 col-xs-6 tital ">sourcefile:</div>
+                                <div class="col-sm-7"><%=data.machine.sourcefile%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-5 col-xs-6 tital ">BIOS?:</div>
+                                <div class="col-sm-7"><%=data.machine.isbios%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-5 col-xs-6 tital ">Device?:</div>
+                                <div class="col-sm-7"><%=data.machine.isdevice%></div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-5 col-xs-6 tital ">runnable:</div>
+                                <div class="col-sm-7"><%=data.machine.runnable%></div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <% if (data.machine.cloneof) { %>
+                                <div class="col-sm-5 col-xs-6 tital ">cloneof:</div>
+                                <div class="col-sm-7"><%=data.machine.cloneof%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <% } %>
+
+                                <% if (data.machine.romof) { %>
+                                <div class="col-sm-5 col-xs-6 tital ">romof:</div>
+                                <div class="col-sm-7"><%=data.machine.romof%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <% } %>
+                                
+                                <% if (data.machine.sampleof) { %>
+                                <div class="col-sm-5 col-xs-6 tital ">sampleof:</div>
+                                <div class="col-sm-7"><%=data.machine.sampleof%></div>
+                                <% } %>
+                                
+
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Menu 1</a></li>
+                    <li><a href="#">Menu 2</a></li>
+                    <li><a href="#">Menu 3</a></li>
+                </ul>
+            </div>
+            <script>
+                $(function () {
+                    $('#profile-image1').on('click', function () {
+                        $('#profile-image-upload').click();
+                    });
+                });
+            </script>
+        </div>
+
+        <% if (data.machine.rom.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/rom.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+        
+        <!-- DIPSWITCH Table -->
+        <% if (data.machine.dipswitch.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/dipswitch.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.biosset.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/biosset.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.disk.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/disk.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.deviceref.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/deviceref.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.sample.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/sample.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.chip.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/chip.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.display.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/display.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.sound.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/sound.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.input.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/input.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.configuration.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/configuration.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.port.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/port.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.adjuster.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/adjuster.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.feature.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/feature.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.device.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/device.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.slot.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/slot.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.softwarelist.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/softwarelist.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+
+        <% if (data.machine.ramoption.length > 0) { %>
+        <div class="row">
+            <div class="col-md-12 ">
+                <% include details/ramoption.ejs %>  
+            </div>
+        </div>  
+        <%}%>
+            
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
