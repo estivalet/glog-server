@@ -16,6 +16,10 @@ var MachineSchema = new Schema(
     description: {type: String},
     year: {type: String},
     manufacturer: {type: String},
+    category: {type: String},
+    info: {type: String},
+    veradded: {type: String},
+    history: {type: String},
     biosset: [{
         name: {type: String},
         description: {type: String},

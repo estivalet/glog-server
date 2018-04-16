@@ -18,9 +18,10 @@
         <%= title %>
     </h1>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <style>
         input.hidden {
             position: absolute;
@@ -46,11 +47,9 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-
             <div class="col-md-4">
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>
@@ -58,9 +57,7 @@
                         </h4>
                     </div>
                     <div class="panel-body">
-
                         <div class="box box-info">
-
                             <div class="box-body">
                                 <div class="col-sm-6">
                                     <div align="center"> <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
@@ -76,6 +73,7 @@
                                     </span>
                                     <span><p><%=data.machine.manufacturer%></p></span>
                                     <span><p><%=data.machine.year%></p></span>
+                                    <span><p><%=data.machine.category%></p></span>
                                     <span><p><%=data.machine.driver.status%></p></span>
                                     <span><p><%=data.machine.driver.emulation%></p></span>
                                     <span><p><%=data.machine.driver.cocktail%></p></span>
@@ -84,11 +82,17 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr style="margin:5px 0 5px 0;">
+
                                 <div class="col-sm-5 col-xs-6 tital ">romset:</div>
                                 <div class="col-sm-7 col-xs-6 "><%=data.machine.name%></div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
 
+                                <div class="col-sm-5 col-xs-6 tital ">veradded:</div>
+                                <div class="col-sm-7 col-xs-6 "><%=data.machine.veradded%></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                
                                 <div class="col-sm-5 col-xs-6 tital ">sourcefile:</div>
                                 <div class="col-sm-7"><%=data.machine.sourcefile%></div>
                                 <div class="clearfix"></div>
@@ -129,25 +133,350 @@
                                 <div class="col-sm-5 col-xs-6 tital ">sampleof:</div>
                                 <div class="col-sm-7"><%=data.machine.sampleof%></div>
                                 <% } %>
-                                
-
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
-
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Menu 1</a></li>
-                    <li><a href="#">Menu 2</a></li>
-                    <li><a href="#">Menu 3</a></li>
-                </ul>
+                <div class="container">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+    
+                        <% if (data.machine.rom.length > 0) { %>
+                            <li class="active">
+                                <a href="#roms" role="tab" data-toggle="tab">
+                                    <icon class="fa fa-home"></icon> Roms
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.dipswitch.length > 0) { %>
+                            <li><a href="#dipswitches" role="tab" data-toggle="tab">
+                                <i class="fa fa-user"></i> Dipswitches
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.biosset.length > 0) { %>
+                            <li>
+                                <a href="#biosset" role="tab" data-toggle="tab">
+                                    <i class="fa fa-envelope"></i> Bios Set
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.disk.length > 0) { %>
+                            <li>
+                                <a href="#disks" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Disks
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.deviceref.length > 0) { %>
+                            <li>
+                                <a href="#deviceref" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Device Ref
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.sample.length > 0) { %>
+                            <li>
+                                <a href="#sample" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Samples
+                                </a>
+                            </li>
+                        <%}%>
+                        
+                        <% if (data.machine.chip.length > 0) { %>
+                            <li>
+                                <a href="#chip" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Chips
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.display.length > 0) { %>
+                            <li>
+                                <a href="#display" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Displays
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.sound.length > 0) { %>
+                            <li>
+                                <a href="#sound" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Sound
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.input.length > 0) { %>
+                            <li>
+                                <a href="#input" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Input
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.configuration.length > 0) { %>
+                            <li>
+                                <a href="#configuration" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Configuration
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.port.length > 0) { %>
+                            <li>
+                                <a href="#port" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Port
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.adjuster.length > 0) { %>
+                            <li>
+                                <a href="#adjuster" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Adjuster
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.feature.length > 0) { %>
+                            <li>
+                                <a href="#feature" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Feature
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.device.length > 0) { %>
+                            <li>
+                                <a href="#device" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Device
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.slot.length > 0) { %>
+                            <li>
+                                <a href="#slot" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Slot
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.softwarelist.length > 0) { %>
+                            <li>
+                                <a href="#softwarelist" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> Software List
+                                </a>
+                            </li>
+                        <%}%>
+
+                        <% if (data.machine.ramoption.length > 0) { %>
+                            <li>
+                                <a href="#ramoption" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cog"></i> RAM Option
+                                </a>
+                            </li>
+                        <%}%>
+                        
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <% if (data.machine.rom.length > 0) { %>
+                            <div class="tab-pane fade active in" id="roms">
+                                <div class="row" id="roms">
+                                    <div class="col-md-12 ">
+                                        <% include details/rom.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                            
+                        <% if (data.machine.dipswitch.length > 0) { %>
+                            <div class="tab-pane fade" id="dipswitches">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/dipswitch.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+
+                        <% if (data.machine.biosset.length > 0) { %>
+                            <div class="tab-pane fade" id="biosset">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/biosset.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+    
+                        <% if (data.machine.disk.length > 0) { %>
+                            <div class="tab-pane fade" id="disks">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/disk.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+
+                        <% if (data.machine.deviceref.length > 0) { %>
+                            <div class="tab-pane fade" id="deviceref">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/deviceref.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.sample.length > 0) { %>
+                            <div class="tab-pane fade" id="sample">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/sample.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.chip.length > 0) { %>
+                            <div class="tab-pane fade" id="chip">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/chip.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.display.length > 0) { %>
+                            <div class="tab-pane fade" id="display">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/display.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.sound.length > 0) { %>
+                            <div class="tab-pane fade" id="sound">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/sound.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.input.length > 0) { %>
+                            <div class="tab-pane fade" id="input">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/input.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.configuration.length > 0) { %>
+                            <div class="tab-pane fade" id="configuration">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/configuration.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.port.length > 0) { %>
+                            <div class="tab-pane fade" id="port">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/port.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.adjuster.length > 0) { %>
+                            <div class="tab-pane fade" id="adjuster">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/adjuster.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.feature.length > 0) { %>
+                            <div class="tab-pane fade" id="feature">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/feature.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.device.length > 0) { %>
+                            <div class="tab-pane fade" id="device">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/device.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.slot.length > 0) { %>
+                            <div class="tab-pane fade" id="slot">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/slot.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.softwarelist.length > 0) { %>
+                            <div class="tab-pane fade" id="softwarelist">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/softwarelist.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                        
+                        <% if (data.machine.ramoption.length > 0) { %>
+                            <div class="tab-pane fade" id="ramoption">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <% include details/ramoption.ejs %>  
+                                    </div>
+                                </div>  
+                            </div>
+                        <%}%>
+                    
+
+
+                    </div>
+                </div>
             </div>
             <script>
                 $(function () {
@@ -158,150 +487,48 @@
             </script>
         </div>
 
-        <% if (data.machine.rom.length > 0) { %>
+        <% if (data.machine.info) { %>        
         <div class="row">
-            <div class="col-md-12 ">
-                <% include details/rom.ejs %>  
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <%-data.machine.info%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>  
-        <%}%>
-        
-        <!-- DIPSWITCH Table -->
-        <% if (data.machine.dipswitch.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/dipswitch.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.biosset.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/biosset.ejs %>  
-            </div>
-        </div>  
+        </div>
         <%}%>
 
-        <% if (data.machine.disk.length > 0) { %>
+        <% if (data.machine.history) { %>        
         <div class="row">
-            <div class="col-md-12 ">
-                <% include details/disk.ejs %>  
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>History</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <%-data.machine.history%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>  
+        </div>
         <%}%>
+            
+ 
 
-        <% if (data.machine.deviceref.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/deviceref.ejs %>  
-            </div>
-        </div>  
-        <%}%>
 
-        <% if (data.machine.sample.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/sample.ejs %>  
-            </div>
-        </div>  
-        <%}%>
 
-        <% if (data.machine.chip.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/chip.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.display.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/display.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.sound.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/sound.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.input.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/input.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.configuration.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/configuration.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.port.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/port.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.adjuster.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/adjuster.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.feature.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/feature.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.device.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/device.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.slot.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/slot.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.softwarelist.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/softwarelist.ejs %>  
-            </div>
-        </div>  
-        <%}%>
-
-        <% if (data.machine.ramoption.length > 0) { %>
-        <div class="row">
-            <div class="col-md-12 ">
-                <% include details/ramoption.ejs %>  
-            </div>
-        </div>  
-        <%}%>
             
     </div>
 

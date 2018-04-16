@@ -6,6 +6,11 @@
 - open a command line in the bin folder
 - start it! mongod.exe --dbpath data
 
+db.machines.drop() to exclude the collection.
+
+mame64 -listsoftware snes>"mame - snes.xml"
+mame64 -listxml > "mame.xml" (arcade only)
+
 use postman to test the API
 
 https://www.callicoder.com/node-js-express-mongodb-restful-crud-api-tutorial/
