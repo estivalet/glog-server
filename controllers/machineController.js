@@ -67,3 +67,15 @@ exports.random = function(req, res) {
         res.render('test', { title: 'Mame Random Machine', error: err, data: results });
     });
 };
+
+
+exports.findAllCategories = (req, res) => {
+    Machine.distinct("category").sort()
+    .then(categories => {
+        res.send(categories);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving categories."
+        });
+    });
+};

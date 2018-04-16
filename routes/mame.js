@@ -12,4 +12,6 @@ router.get('/machines/:page', machine_controller.list);
 
 router.get('/machine/:id', machine_controller.detail);
 
+router.get('/categories', machine_controller.findAllCategories);
+
 module.exports = router;
