@@ -20,7 +20,7 @@
                 </thead>
             <% for (var i = 0; i < machines.length; i++) { %>
                 <tr>
-                    <td><a href="/mame/machine/<%=machines[i].id%>"><%=machines[i].name%></a></td>
+                    <td><a href="/mame/machine/<%=machines[i]._id%>"><%=machines[i].name%></a></td>
                     <td><%=machines[i].title%></td>
                     <td><%=machines[i].manufacturer%></td>
                     <td><%=machines[i].year%></td>

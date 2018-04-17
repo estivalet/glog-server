@@ -1,19 +1,6 @@
 var request = require('request');
-
-var Machine = require('../models/machine');
-
 var async = require('async');
 
-exports.index = function(req, res) {   
-    
-    async.parallel({
-        machine_count: function(callback) {
-            Machine.count({}, callback); // Pass an empty object as match condition to find all documents of this collection
-        },
-    }, function(err, results) {
-        res.render('machine', { title: 'Mame Machines', error: err, data: results });
-    });
-};
 
 exports.list = function(req, res) {
     var perPage = 9
@@ -47,32 +34,15 @@ exports.list = function(req, res) {
             });
         },
     }, function(err, results){
-        console.log("********************");
-        console.log(results.count);
-        console.log(Math.ceil(results.count / perPage))
         res.render('machines', { title: 'Mame Random Machine', error: err, current:page, pages: Math.ceil(results.count / perPage), machines: JSON.parse(results.list) });
     });
-
- 
- 
 };
 
 exports.detail = function(req, res) {
-    async.parallel({
-        machine: function(callback) {
-            Machine.findById(req.params.id)
-              .populate('machine')
-              .exec(callback);
-        },
-    }, function(err, results) {
-        if (err) { return next(err); }
-        if (results.machine==null) { // No results.
-            var err = new Error('machine not found');
-            err.status = 404;
-            return next(err);
-        }
-        // Successful, so render.
-        res.render('test', { title: 'Title', data:  results } );
+    request.get({
+        url: 'http://localhost:3001/mame/api/machine/' + req.params.id, 
+    }, function(error, response, body){
+        res.render('testapi', { title: 'Search Mame Machine', error: error, data: JSON.parse(body) });
     });    
 }
 
@@ -80,14 +50,7 @@ exports.random = function(req, res) {
     async.parallel({
         one: function(callback) {
             request({
-                url: 'http://localhost:3001/mame/api/random', //URL to hit
-                qs: {from: 'example', time: +new Date()}, //Query string data
-                method: 'GET', // specify the request type
-                headers: { // speciyfy the headers
-                    'Content-Type': 'MyContentType',
-                    'Custom-Header': 'Custom Value'
-                },
-                body: 'Hello Hello! String body!' //Set the body as a string
+                url: 'http://localhost:3001/mame/api/random',
             }, function(error, response, body){
                 if(error) {
                     console.log(error);
@@ -105,11 +68,23 @@ exports.random = function(req, res) {
 };
 
 
-exports.findAllCategories = (req, res) => {
+exports.search = (req, res) => {
     request({
         url: 'http://localhost:3001/mame/api/categories/all', 
         method: 'GET',
     }, function(error, response, body){
-        res.render('search', { title: 'Search Mame Machine', error: error, data: JSON.parse(body) });
+        res.render('search', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
     });    
+};
+
+exports.searchByDescription = (req, res) => {
+    console.log('searchbydesc');
+    console.log(req.params.description);
+    request.get({
+        url: 'http://localhost:3001/mame/api/machine/desc/' + req.params.description, 
+    }, function(error, response, body){
+        console.log(JSON.parse(body));
+        res.render('machines', { title: 'Search Mame Machine', error: error, current:1, pages:1, machines: JSON.parse(body) });
+    });    
+    
 };
