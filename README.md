@@ -13,11 +13,6 @@ mame64 -listxml > "mame.xml" (arcade only)
 
 use postman to test the API
 
-https://www.callicoder.com/node-js-express-mongodb-restful-crud-api-tutorial/
-
-https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Tutorial_local_library_website
-
-https://github.com/mdn/express-locallibrary-tutorial
 
 git add .
 git commit -m "comment"
@@ -29,6 +24,12 @@ npm run devstart
 Links used to develop mamedb:
 
 https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
+
+https://www.callicoder.com/node-js-express-mongodb-restful-crud-api-tutorial/
+
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Tutorial_local_library_website
+
+https://github.com/mdn/express-locallibrary-tutorial
 
 Similar apps:
 

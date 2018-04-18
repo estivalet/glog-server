@@ -78,13 +78,14 @@ exports.search = (req, res) => {
 };
 
 exports.searchByDescription = (req, res) => {
-    console.log('searchbydesc');
-    console.log(req.params.description);
+    var perPage = 9;
+    var page = req.params.page || 1
+
     request.get({
         url: 'http://localhost:3001/mame/api/machine/desc/' + req.params.description, 
     }, function(error, response, body){
-        console.log(JSON.parse(body));
-        res.render('machines', { title: 'Search Mame Machine', error: error, current:1, pages:1, machines: JSON.parse(body) });
+        json = JSON.parse(body);
+        res.render('machines', { title: 'Search Mame Machine', error: error, current:page, pages: Math.ceil(json.length / perPage), machines: JSON.parse(body) });
     });    
     
 };

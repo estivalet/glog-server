@@ -1,3 +1,5 @@
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+
 <select>
 <% for (var i = 0; i < categories.length; i++) { %>
     <option><%=categories[i]%></option>
@@ -5,4 +7,20 @@
 </select>
 
 <input type="text" id="descricao"/>
-<button onclick="search()">Pesquisar</button>
+<button id="search">Pesquisar</button>
+
+<script>
+$('#search').click(function(event) {
+    $.ajax({
+        url: '/mame/machine/desc/' + $('#descricao').val(),
+        //url: 'http://localhost:3001/mame/api/machine/desc/' + $('#descricao').val(),
+        type: 'GET',
+        error: function() {
+            console.log('error');
+        },
+        success: function(data) {
+            console.log('DATA===>' + data);
+        },
+    });    
+});
+</script>
