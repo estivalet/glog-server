@@ -30,3 +30,9 @@ Links used to develop mamedb:
 
 https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
 
+Similar apps:
+
+http://adb.arcadeitalia.net/default.php
+http://www.progettoemma.net/
+http://mamedb.org/
+http://mamedb.blu-ferret.co.uk/

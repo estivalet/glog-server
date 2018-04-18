@@ -13,7 +13,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.util.JSON;
+import com.mongodb.client.model.Updates;
 
 import glog.domain.mamedb.Machine;
 import glog.domain.mamedb.Mame;
@@ -22,7 +22,7 @@ import glog.importdb.MameXML;
 /**
  * Grab all info from MAME and insert into a MongoDB database.
  * 
- * @author lestivalet
+ * @author luisoft
  *
  */
 public class ImportMAME2MongoDB {
@@ -33,17 +33,16 @@ public class ImportMAME2MongoDB {
 		MongoCollection<Document> collection = database.getCollection("machines");
 
 		MameXML xml = new MameXML();
-		Mame mame = xml.readXMLFileNew("c:/users/lestivalet/desktop/mame.xml");
+		Mame mame = xml.readXMLFileNew("c:/users/luisoft/desktop/mame.xml");
 		Gson gson = new Gson();
 		for (Machine m : mame.getMachine()) {
-			BasicDBObject obj = (BasicDBObject) JSON.parse(gson.toJson(m));
-			collection.insertOne(new Document(obj));
+			collection.insertOne(new Document(BasicDBObject.parse(gson.toJson(m))));
 		}
 		mongoClient.close();
 	}
 
 	public static void importHistory() throws Exception {
-		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/lestivalet/desktop/history.dat")));
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/history.dat")));
 		String line = null;
 		String history = "";
 		String rom = "";
@@ -82,7 +81,7 @@ public class ImportMAME2MongoDB {
 		MongoClient mongoClient = new MongoClient();
 		MongoDatabase database = mongoClient.getDatabase("mamedb");
 		MongoCollection<Document> collection = database.getCollection("machines");
-		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/lestivalet/desktop/catver.ini")));
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/catver.ini")));
 
 		String line = null;
 		boolean verAdded = false;
@@ -111,13 +110,11 @@ public class ImportMAME2MongoDB {
 				String[] values = line.split("=");
 
 				if (category) {
-					collection.updateOne(eq("name", values[0].trim()),
-							new Document("$set", new Document("category", values[1].trim())));
+					collection.updateOne(eq("name", values[0].trim()), new Document("$set", new Document("category", values[1].trim())));
 					System.out.println(values[0].trim());
 					System.out.println(values[1].trim());
 				} else if (verAdded) {
-					collection.updateOne(eq("name", values[0].trim()),
-							new Document("$set", new Document("veradded", values[1].trim())));
+					collection.updateOne(eq("name", values[0].trim()), new Document("$set", new Document("veradded", values[1].trim())));
 					System.out.println(values[0].trim());
 					System.out.println(values[1].trim());
 				}
@@ -129,7 +126,7 @@ public class ImportMAME2MongoDB {
 	}
 
 	public static void importMAMEInfo() throws Exception {
-		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/lestivalet/desktop/mameinfo.dat")));
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/mameinfo.dat")));
 		String line = null;
 		String info = "";
 		String rom = null;
@@ -169,11 +166,187 @@ public class ImportMAME2MongoDB {
 		mongoClient.close();
 	}
 
+	public static void importGenre() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/genre.ini")));
+
+		String line = null;
+		String genre = null;
+
+		// Read a line. Skip first 8 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (line.startsWith("[")) {
+				genre = line.substring(1, line.indexOf("]"));
+			}
+			if (!line.isEmpty()) {
+				System.out.println(line);
+				collection.updateOne(eq("name", line), new Document("$set", new Document("genre", genre)));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
+	public static void importMature() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/mature.ini")));
+
+		String line = null;
+
+		// Read a line. Skip first 7 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (!line.isEmpty()) {
+				System.out.println(line);
+				collection.updateOne(eq("name", line), new Document("$set", new Document("mature", "yes")));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
+	public static void importLanguage() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/languages.ini")));
+
+		String line = null;
+		String language = null;
+
+		// Read a line. Skip first 8 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (line.startsWith("[")) {
+				language = line.substring(1, line.indexOf("]"));
+			} else if (!line.isEmpty()) {
+				// System.out.println(line + " = " + language);
+				collection.updateOne(eq("name", line), new Document("$set", new Document("language", language)));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
+	public static void importSeries() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/series.ini")));
+
+		String line = null;
+		String series = null;
+
+		// Read a line. Skip first 8 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (line.startsWith("[")) {
+				series = line.substring(1, line.indexOf("]"));
+			} else if (!line.isEmpty()) {
+				// System.out.println(line + " = " + series);
+				collection.updateOne(eq("name", line), new Document("$set", new Document("series", series)));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
+	public static void importCabinets() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/cabinets.ini")));
+
+		String line = null;
+		String cabinet = null;
+
+		// Read a line. Skip first 8 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (line.startsWith("[")) {
+				cabinet = line.substring(1, line.indexOf("]"));
+			} else if (!line.isEmpty()) {
+				// System.out.println(line + " = " + cabinet);
+				// Document cab = new Document().append("cabinets", cabinet);
+				collection.updateOne(eq("name", line), Updates.addToSet("cabinets", cabinet));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
+	public static void importFreeplay() throws Exception {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase database = mongoClient.getDatabase("mamedb");
+		MongoCollection<Document> collection = database.getCollection("machines");
+		BufferedReader br = new BufferedReader(new FileReader(new File("c:/users/luisoft/desktop/freeplay.ini")));
+
+		String line = null;
+
+		// Read a line. Skip first 7 lines
+		for (int i = 0; i < 7; i++) {
+			line = br.readLine().trim();
+		}
+
+		// Loop through all lines.
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (!line.isEmpty()) {
+				System.out.println(line);
+				collection.updateOne(eq("name", line), new Document("$set", new Document("freeplay", "yes")));
+			}
+		}
+		br.close();
+		mongoClient.close();
+	}
+
 	public static void main(String[] args) throws Exception {
 		// ImportMAME2MongoDB.importListXML();
 		// ImportMAME2MongoDB.importHistory();
 		// ImportMAME2MongoDB.importCatVer();
-		ImportMAME2MongoDB.importMAMEInfo();
+		// ImportMAME2MongoDB.importMAMEInfo();
+		// ImportMAME2MongoDB.importGenre();
+		// ImportMAME2MongoDB.importMature();
+		// ImportMAME2MongoDB.importLanguage();
+		// ImportMAME2MongoDB.importSeries();
+		// ImportMAME2MongoDB.importCabinets();
+		// ImportMAME2MongoDB.importFreeplay();
 	}
 
 }
