@@ -77,15 +77,33 @@ exports.search = (req, res) => {
     });    
 };
 
+exports.advancedSearch = (req, res) => {
+    request({
+        url: 'http://localhost:3001/mame/api/categories/all', 
+        method: 'GET',
+    }, function(error, response, body){
+        res.render('advsearch', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
+    });    
+};
+
+exports.advancedSearchResults = (req, res) => {
+    // get parameters to perform a query.
+    console.log('adv search params');
+    console.log(req.body);
+    console.log(req.params);
+};
+
 exports.searchByDescription = (req, res) => {
     var perPage = 9;
     var page = req.params.page || 1
 
     request.get({
-        url: 'http://localhost:3001/mame/api/machine/desc/' + req.params.description, 
+        url: 'http://localhost:3001/mame/api/machine/desc/' + req.params.description + '/' + page, 
     }, function(error, response, body){
         json = JSON.parse(body);
-        res.render('machines', { title: 'Search Mame Machine', error: error, current:page, pages: Math.ceil(json.length / perPage), machines: JSON.parse(body) });
+        res.setHeader('Content-Type', 'application/json');
+        res.send(json);
+        //res.render('machines', { title: 'Search Mame Machine', error: error, current:page, pages: Math.ceil(json.length / perPage), machines: JSON.parse(body) });
     });    
     
 };
