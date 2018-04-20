@@ -1,15 +1,16 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 Advanced Search
 
-<form id="form">
-<select id="category">
-<% for (var i = 0; i < categories.length; i++) { %>
-    <option><%=categories[i]%></option>
-<%}%>    
-</select>
 
-<input type="text" id="descricao"/>
-<button id="search">Pesquisar</button>
+<form id="form" action="#">
+    <select id="category" name="category">
+    <% for (var i = 0; i < categories.length; i++) { %>
+        <option><%=categories[i]%></option>
+    <%}%>    
+    </select>
+    
+    <input type="text" id="descricao" name="descricao"/>
+    <button id="search">Pesquisar</button>
 </form>
 
 <script>

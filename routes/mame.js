@@ -12,9 +12,7 @@ router.get('/machine/:id', machine_controller.detail);
 
 router.get('/machine/desc/:description/:page', machine_controller.searchByDescription);
 
-router.get('/search', machine_controller.search);
-
-router.get('/advsearch', machine_controller.advancedSearch);
+router.get('/page/:page', machine_controller.gotoPage);
 
 router.post('/results', machine_controller.advancedSearchResults);
 
