@@ -90,19 +90,77 @@ exports.searchPage = (req, res) => {
 };
 
 exports.advancedSearchPage = (req, res) => {
-    request({
-        url: 'http://localhost:3001/mame/api/categories/all', 
-        method: 'GET',
-    }, function(error, response, body){
-        res.render('advsearch', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
-    });    
+    async.parallel({
+        categories: function(callback) {
+            request.get({
+                url: 'http://localhost:3001/mame/api/categories/all',
+            }, function(error, response, body){
+                if(error) {
+                    console.log(error);
+                    callback(true, {});
+                } else {
+                    callback(null, body);
+                }
+            });    
+        },
+        genres: function(callback) {
+            request.get({
+                url: 'http://localhost:3001/mame/api/genres/all',
+            }, function(error, response, body){
+                if(error) {
+                    console.log(error);
+                    callback(true, {});
+                } else {
+                    callback(null, body);
+                }
+            });    
+        },
+        manufacturers: function(callback) {
+            request.get({
+                url: 'http://localhost:3001/mame/api/manufacturers/all',
+            }, function(error, response, body){
+                if(error) {
+                    console.log(error);
+                    callback(true, {});
+                } else {
+                    callback(null, body);
+                }
+            });    
+        },
+        
+    }, function(err, results){
+            res.render('advsearch', 
+                { title: 'Advanced Search Random Machine'
+                , error: err
+                , categories: JSON.parse(results.categories) 
+                , genres: JSON.parse(results.genres) 
+                , manufacturers: JSON.parse(results.manufacturers) 
+       });
+    });
 };
 
 exports.advancedSearchResults = (req, res) => {
-    // get parameters to perform a query.
     console.log('adv search params');
     console.log(req.body);
-    console.log(req.params);
+    //json = JSON.stringify(req.body);
+    //console.log(json);
+
+    var perPage = 10;
+    var page = req.params.page || 1;
+
+
+    request.post({
+        url: 'http://localhost:3001/mame/api/search/' + page, 
+        form: req.body,
+        headers: {
+            "content-type": "application/json"
+        },
+        json: true,
+    }, function (error, response, body) {
+        console.log(body);
+        console.log('total returned = ' + body.total);
+        res.send(body);
+    });
 };
 
 exports.searchByDescription = (req, res) => {

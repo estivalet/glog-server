@@ -1,22 +1,67 @@
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+</head>
+<body>
+
 Advanced Search
 
 
-<form id="form" action="#">
+<form id="form" onsubmit="return false">
     <select id="category" name="category">
+        <option></option>
     <% for (var i = 0; i < categories.length; i++) { %>
         <option><%=categories[i]%></option>
     <%}%>    
     </select>
     
-    <input type="text" id="descricao" name="descricao"/>
+    <select id="genre" name="genre">
+        <option></option>
+        <% for (var i = 0; i < genres.length; i++) { %>
+            <option><%=genres[i]%></option>
+        <%}%>    
+    </select>
+
+    <select id="manufacturer" name="manufacturer">
+        <option></option>
+        <% for (var i = 0; i < manufacturers.length; i++) { %>
+            <option><%=manufacturers[i]%></option>
+        <%}%>    
+    </select>
+
+    <input type="text" id="description" name="description"/>
     <button id="search">Pesquisar</button>
 </form>
 
+
+    <div class="container">
+        <div class="row">
+            <table id="tbl-result" class="table table-striped table-hover">
+                <caption>List of machines</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th>name</th>
+                        <th>title</th>
+                        <th>manufacturer</th>
+                        <th>year</th>
+                    </tr>
+                </thead>
+                <tbody id="tbl-body"></tbody>
+            </table>
+        </div>
+
+        <ul id="pagination" class="pagination text-center"></ul>
+    
+    </div>
+
 <script>
-$('#search').click(function(event) {
+function gotoPage(page) {
     $.ajax({
-        url: '/mame/results/',
+        url: '/mame/results/' + page,
         type: 'POST',
         dataType : 'json',
         data : $("#form").serialize(), 
@@ -24,8 +69,65 @@ $('#search').click(function(event) {
             console.log('error');
         },
         success: function(data) {
-            console.log('resposta ' + data);
+            // if a message returned then must be an error or no data found.
+            if (data.message) {
+                return;
+            }
+
+            $('#tbl-body').children().remove();
+            $('#pagination').children().remove();
+
+            // put data on table.
+            for(var i=0; i < data.machines.length; i++) {
+                var columns = '<td>' + data.machines[i].name + '</td>';
+                columns +=    '<td>' + data.machines[i].title + '</td>';
+                columns +=    '<td>' + data.machines[i].manufacturer + '</td>';
+                columns +=    '<td>' + data.machines[i].year + '</td>';
+                $('#tbl-result > tbody:last-child').append('<tr>' + columns + '</tr>');
+            }
+
+            // build pagination
+            if (data.pages > 0) {
+                if (data.current == 1) {
+                    $('#pagination').append('<li class="disabled"><a>First</a></li>');
+                } else {
+                    $('#pagination').append('<li><a onclick="gotoPage(1)">First</a></li>');
+                }
+                if (Number(data.current) - 1 > 0) {
+                    $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) - 1) + ')">Prev</a></li>');
+                }
+                var i = (Number(data.current) > 5 ? Number(data.current) - 4 : 1)
+                if (i !== 1) {
+                    $('#pagination').append('<li class="disabled"><a>...</a></li>');
+                }
+                for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) {
+                    if (i == data.current) {
+                        $('#pagination').append('<li class="active"><a>' + i + '</a></li>');
+                    } else {
+                        $('#pagination').append('<li><a onclick="gotoPage(' + i  + ')">' + i + '</a></li>');
+                    }
+                    if (i == Number(data.current) + 4 && i < data.pages) {
+                        $('#pagination').append('<li class="disabled"><a>...</a></li>');
+                    }
+                }
+                if (Number(data.current) + 1 <= data.pages) {
+                    $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) + 1) + ')">Next</a></li>');
+                }
+                if (data.current == data.pages) {
+                    $('#pagination').append('<li class="disabled"><a>Last</a></li>');
+                } else {
+                    $('#pagination').append('<li><a onclick="gotoPage(' + data.pages + ')">Last</a></li>');
+                }
+            }
         },
     });    
+
+}
+
+$('#search').click(function(event) {
+    gotoPage(1);
 });
 </script>
+
+</body>
+</html>

@@ -6,24 +6,27 @@
 <%}%>    
 </select>
 
-<input type="text" id="descricao"/>
+<input type="text" id="description" name="description"/>
 <button id="search">Pesquisar</button>
 
 <script>
 $('#search').click(function(event) {
     $.ajax({
-        url: '/mame/machine/desc/' + $('#descricao').val() + '/1',
+        url: '/mame/machine/desc/' + $('#description').val() + '/1',
         //url: 'http://localhost:3001/mame/api/machine/desc/' + $('#descricao').val(),
         type: 'GET',
         error: function() {
             console.log('error');
         },
         success: function(data) {
+            console.log(data[1].name);
+            /*
             json = JSON.parse(data);
             console.log('DATA===>' + json);
             console.log('name==>' + json[1]);
             console.log('size==>' + json.length);
             console.log('name==>' + json[1].name);
+            */
             /*
             for (var i = 0; i < data.length; i++) {
                 console.log('name=>' + data[i].name);

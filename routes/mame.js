@@ -14,6 +14,6 @@ router.get('/machine/desc/:description/:page', machine_controller.searchByDescri
 
 router.get('/page/:page', machine_controller.gotoPage);
 
-router.post('/results', machine_controller.advancedSearchResults);
+router.post('/results/:page', machine_controller.advancedSearchResults);
 
 module.exports = router;
