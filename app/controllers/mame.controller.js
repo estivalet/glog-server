@@ -34,7 +34,7 @@ exports.list = function(req, res) {
             });
         },
     }, function(err, results){
-        res.render('machines', { title: 'Mame Random Machine', error: err, current:page, pages: Math.ceil(results.count / perPage), machines: JSON.parse(results.list) });
+        res.render('mame/all-machines', { title: 'Mame Random Machine', error: err, current:page, pages: Math.ceil(results.count / perPage), machines: JSON.parse(results.list) });
     });
 };
 
@@ -42,7 +42,7 @@ exports.detail = function(req, res) {
     request.get({
         url: 'http://localhost:3001/mame/api/machine/' + req.params.id, 
     }, function(error, response, body){
-        res.render('testapi', { title: 'Search Mame Machine', error: error, data: JSON.parse(body) });
+        res.render('mame/machine', { title: 'Search Mame Machine', error: error, data: JSON.parse(body) });
     });    
 }
 
@@ -63,7 +63,7 @@ exports.random = function(req, res) {
             
         }
     }, function(err, results){
-        res.render('testapi', { title: 'Mame Random Machine', error: err, data: JSON.parse(results.one) });
+        res.render('mame/machine', { title: 'Mame Random Machine', error: err, data: JSON.parse(results.one) });
     });
 };
 
@@ -85,7 +85,7 @@ exports.searchPage = (req, res) => {
         url: 'http://localhost:3001/mame/api/categories/all', 
         method: 'GET',
     }, function(error, response, body){
-        res.render('search', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
+        res.render('mame/search', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
     });    
 };
 
@@ -129,7 +129,7 @@ exports.advancedSearchPage = (req, res) => {
         },
         
     }, function(err, results){
-            res.render('advsearch', 
+            res.render('mame/advanced-search', 
                 { title: 'Advanced Search Random Machine'
                 , error: err
                 , categories: JSON.parse(results.categories) 

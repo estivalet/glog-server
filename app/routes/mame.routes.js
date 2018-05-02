@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 // Require controller modules.
-var machine_controller = require('../controllers/machineController');
+var machine_controller = require('../controllers/mame.controller');
+
+router.get('/database', (req, res) => {
+    res.render('mame/index');
+});
 
 router.get('/random', machine_controller.random);
 
