@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var glog_controller = require('../controllers/glog.controller');
 
-
-router.get('/', (req, res) => {
-    res.render('index');
-});
+router.get('/', glog_controller.index);
 
 router.get('/box', (req, res) => {
     res.render('glogbox');

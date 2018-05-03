@@ -3,5 +3,10 @@
 <li><a href='/mame/database'>MAME database</a></li>
 </ul>
 
-
+<select>
+    <% for (var i = 0; i < systems.length; i++) { %>
+        <option><%=systems[i].name%></option>
+    <%}%>    
+</select>
+    
 
