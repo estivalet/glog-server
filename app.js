@@ -19,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+var staticResource='G:/glog/platform/';
+app.use('/public2', express.static(path.join(staticResource, 'public2')));
 
 app.use('/', index);
 app.use('/mame', mame);

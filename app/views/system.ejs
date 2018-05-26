@@ -46,7 +46,22 @@
     th input {
         width: 90%;
     }
-    
+    fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.0em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+        font-size: 1.0em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 5px;
+        border-bottom:none;
+    }
   </style>
 </head>
 
@@ -145,6 +160,66 @@
         
         <!-- Main row -->
         <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary shadow">
+                <div class="box-header with-border">
+                    Send system to Retropie
+                </div>
+                <div class="box-body">
+                  <form id="form" onsubmit="return false">
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>Host</label>
+                              <input type="text" name="host" id="host" class="form-control" placeholder="retropie" value="retropie">
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>Port</label>
+                              <input type="text" name="port" id="port" class="form-control" placeholder="22" value="22">
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>Username</label>
+                              <input type="text" name="username" id="username" class="form-control" placeholder="pi" value="pi">
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>Password</label>
+                              <input type="text" name="password" id="password" class="form-control" placeholder="raspberry" value="raspberry">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <fieldset class="scheduler-border">
+                              <legend class="scheduler-border">Options</legend>
+                                  <div class="form-group">
+                                    <div class="checkbox">
+                                      <label>
+                                        <input type="checkbox" id="favorites" name="favorites">
+                                        Favorites Only
+                                      </label>
+                                    </div>
+                                  </div>
+                            </fieldset>
+
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="box-footer">
+                    <button id="send" type="button" class="btn btn-primary">Send</button>
+                </div>
+              </div>
+            </div>
+        </div>
+  
+
+        <div class="row">
           <div class="col-md-12">
             <div class="box box-primary shadow">
               <div class="box-header with-border">
@@ -156,14 +231,13 @@
                         <div id="systemsDiv"></div>
                     </div>
                 </div>
+                <div id="info">Instruction about the filters: For "Available", "Favorite" and "Medias" columns use T (true) or F (false) for filtering.</div>
               </div>
               <div class="box-footer">
+                <div id="totals"></div>
               </div>
             </div>
           </div>
-
-
-
         </div>
         <!-- /.row (main row) -->
 
@@ -297,6 +371,9 @@ function renderGamesPerSystem(emulators, data) {
     $.ajax({
       url : "/system/<%=name%>/attract",
       success : function(data) {
+        var counters = [];
+        var countersFav = [];
+
         $("#content-wrapper").removeClass("hide");
         $("#frontend").text('Attract Mode');
   
@@ -312,8 +389,9 @@ function renderGamesPerSystem(emulators, data) {
         row.insertCell(0).outerHTML = "<th>Name</th>";
         row.insertCell(1).outerHTML = "<th>Emulator</th>";
         row.insertCell(2).outerHTML = "<th>Available</th>";
+        row.insertCell(3).outerHTML = "<th>Favorite</th>";
         for(var i=0; i < data[0].artwork.length; i++) {
-          row.insertCell(i+3).outerHTML = "<th>" + data[0].artwork[i].type + "</th>";
+          row.insertCell(i+4).outerHTML = "<th>" + data[0].artwork[i].type + "</th>";
         }
 
         var footer = table.createTFoot();
@@ -321,17 +399,26 @@ function renderGamesPerSystem(emulators, data) {
         row.insertCell(0).outerHTML = "<th>Name</th>";
         row.insertCell(1).outerHTML = "<th>Emulator</th>";
         row.insertCell(2).outerHTML = "<th>Available</th>";
+        row.insertCell(3).outerHTML = "<th>Favorite</th>";
         for(var i=0; i < data[0].artwork.length; i++) {
-          row.insertCell(i+3).outerHTML = "<th>" + data[0].artwork[i].type + "</th>";
+          row.insertCell(i+4).outerHTML = "<th>" + data[0].artwork[i].type + "</th>";
         }
 
         var tableBody = document.createElement('TBODY');
         table.appendChild(tableBody);
 
         // Store only different emulators.
-  			var emulators = new Set();
+        var emulators = new Set();
+        counters["total"]=0
+        countersFav["total"]=0
+        countersFav["available"]=0
         $.each(data, function(index, element) {
           emulators.add(element.emulator);
+
+          counters["total"]=counters["total"]+1;
+          if(element.favorite) {
+            countersFav["total"]=countersFav["total"]+1;
+          }
 
    				var tr = document.createElement('TR');
           tableBody.appendChild(tr);
@@ -347,6 +434,15 @@ function renderGamesPerSystem(emulators, data) {
           tr.appendChild(td);
 
           // Available column.
+          if(element.available) {
+            if(isNaN(counters["available"])) {
+              counters["available"]=0;  
+            }
+            if(element.favorite) {
+              countersFav["available"]=countersFav["available"]+1;
+            }
+            counters["available"] = counters["available"] + 1;
+          }
           var td = document.createElement('TD');
           td.setAttribute("align", "center");
           var oImg = document.createElement("img");
@@ -360,9 +456,35 @@ function renderGamesPerSystem(emulators, data) {
           td.appendChild(textSpan);
           tr.appendChild(td);
 
+          // Favorite column.
+          var td = document.createElement('TD');
+          td.setAttribute("align", "center");
+          var oImg = document.createElement("img");
+          oImg.setAttribute('src', '/dist/img/' + element.favorite + '.png');
+          oImg.setAttribute('height', '16px');
+          oImg.setAttribute('width', '16px');
+          td.appendChild(oImg);
+          var textSpan = document.createElement('span')
+          textSpan.innerHTML = element.favorite;
+          textSpan.className = "hide";
+          td.appendChild(textSpan);
+          tr.appendChild(td);
+
           // Media columns.
           var art = "";
           $.each(element.artwork, function(index, artwork) {
+            if(artwork.available) {
+              if(isNaN(counters[artwork.type])) {
+                counters[artwork.type]=0;  
+              }
+              if(element.favorite) {
+                if(isNaN(countersFav[artwork.type])) {
+                  countersFav[artwork.type]=0;
+                }
+                countersFav[artwork.type]=countersFav[artwork.type]+1;
+              }
+              counters[artwork.type] = counters[artwork.type] + 1;
+            }
             var td = document.createElement('TD');
             td.setAttribute("align", "center");
             var oImg = document.createElement("img");
@@ -377,8 +499,9 @@ function renderGamesPerSystem(emulators, data) {
             tr.appendChild(td);
           });
 
-
         });
+
+
         systemsDiv.appendChild(table);
         var dataTable = $("#tableSystems").DataTable();
 
@@ -390,22 +513,76 @@ function renderGamesPerSystem(emulators, data) {
                     .draw();
         } );        
 
-        
+        // Add filters.
         $('#tableSystems tfoot th').each( function (i) {
           var title = $('#tableSystems thead th').eq( $(this).index() ).text();
           $(this).html( '<input type="text" placeholder="Search '+title+'" data-index="'+i+'" />' );
         } );
 
+        // Totals table.
+        var totalsDiv = document.getElementById("totals");
+        totalsDiv.innerHTML = "";
+        var tableTotals = document.createElement('TABLE');
+        tableTotals.border = '1';
+        tableTotals.className = 'table table-bordered table-striped';
+        var headerTotals = tableTotals.createTHead();
+        var rowTotals = headerTotals.insertRow(0);
+        rowTotals.insertCell(0).outerHTML = "<th>Type</th>";
+        var i = 1;
+        for(key in counters) {
+          rowTotals.insertCell(i++).outerHTML = "<th>" + key + "</th>";
+        }
+        var tableBodyTotals = document.createElement('TBODY');
+        tableTotals.appendChild(tableBodyTotals);
+        var trTotals = document.createElement('TR');
+        var tdTotals = document.createElement('TD');
+        tdTotals.appendChild(document.createTextNode("ALL"));
+        trTotals.appendChild(tdTotals);
+        for(key in counters) {
+           tdTotals = document.createElement('TD');
+           tdTotals.appendChild(document.createTextNode(counters[key]));
+           trTotals.appendChild(tdTotals);
+        }
+        tableBodyTotals.appendChild(trTotals);
+        
+        // Total for favorites.
+        trTotals = document.createElement('TR');
+        var tdTotals = document.createElement('TD');
+        tdTotals.appendChild(document.createTextNode("Favorites"));
+        trTotals.appendChild(tdTotals);
+        tableBodyTotals.appendChild(trTotals);
+        for(key in countersFav) {
+           tdTotals = document.createElement('TD');
+           tdTotals.appendChild(document.createTextNode(countersFav[key]));
+           trTotals.appendChild(tdTotals);
+        }
+        totalsDiv.appendChild(tableTotals);
+
         // Only renders games per system if there are more than one system.
         if (emulators.size > 1) {
           renderGamesPerSystem(emulators, data);
         }
-
-
-
       }
     });
   });
+
+$('#send').on('click', function() {
+  console.log("/retropie/send/<%=name%>");
+    $.ajax({
+      url : "/retropie/send/<%=name%>",
+      type : "post",
+      dataType : 'json',
+      data : $("#form").serialize(), 
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log('error ' + errorThrown);
+        console.log(textStatus);
+      },
+      success : function(data) {
+        console.log('ret->'+data);
+      }
+  });
+});
+
   
   </script>
 
