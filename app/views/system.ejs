@@ -195,17 +195,26 @@
                   </div>
                   <div class="row">
                       <div class="col-md-12">
-                          <fieldset class="scheduler-border">
-                              <legend class="scheduler-border">Options</legend>
                                   <div class="form-group">
-                                    <div class="checkbox">
-                                      <label>
-                                        <input type="checkbox" id="favorites" name="favorites">
-                                        Favorites Only
-                                      </label>
-                                    </div>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="favorites" name="favorites">Favorites Only
+                                    </label>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="wheel" name="wheel">Wheel Art
+                                    </label>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="box" name="box">Box Art
+                                    </label>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="cart" name="cart">Cart Art
+                                    </label>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="shot" name="shot">Screenshot
+                                    </label>
+                                    <label class="checkbox-inline">
+                                      <input type="checkbox" id="video" name="video">Video
+                                    </label>
                                   </div>
-                            </fieldset>
 
                       </div>
                     </div>
@@ -368,6 +377,7 @@ function renderGamesPerSystem(emulators, data) {
 }
 
   $('#attract').on('click', function() {
+    console.log("/system/<%=name%>/attract");
     $.ajax({
       url : "/system/<%=name%>/attract",
       success : function(data) {

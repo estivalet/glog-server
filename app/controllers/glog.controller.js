@@ -79,6 +79,7 @@ exports.amControlPanel = function(req, res) {
  */
 exports.attract = function(req, res) {
     // Send a request to ATTRACTMODE API to read the romlist for the selected system and return it.
+    console.log(req.params.systemName)
     request.get({
         url: 'http://localhost:3002/attract/romlist/' + req.params.systemName,
     }, function(error, response, body){
