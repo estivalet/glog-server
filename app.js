@@ -6,7 +6,6 @@ var logger = require('morgan');
 var debug = require('debug')('glog-server:server');
 var http = require('http');
 
-var index = require('./app/routes/index.routes');
 var mame = require('./app/routes/mame.routes'); 
 var glog = require('./app/routes/glog.routes'); 
 
@@ -22,9 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var staticResource='G:/glog/platform/';
 app.use('/public2', express.static(path.join(staticResource, 'public2')));
 
-app.use('/', index);
 app.use('/mame', mame);
-app.use('/glog', glog);
+app.use('/', glog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

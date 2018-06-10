@@ -1,26 +1,54 @@
+<link rel="stylesheet" href="dist/css/jquery.dataTables.min.css">
+<script src="dist/js/jquery-3.1.1.min.js"></script>
+<script src="dist/js/jquery.dataTables.min.js"></script>
+
+
 
 <ul>
         <li><a href='/mame/database'>MAME database</a></li>
         <li><a href='/amcp'>AM Control Panel</a></li>
 </ul>
 
-GLOG Systems:
-<select id="system">
-    <option></option>
-    <% for (var i = 0; i < systems.length; i++) { %>
-        <option value="<%=systems[i].name%>"><%=systems[i].name%></option>
-    <%}%>    
-</select>
-    
+<table id="example" class="display compact" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Favorite</th>
+            <th>Kids</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (var i = 0; i < systems.length; i++) { %>
+        <tr>
+            <td><%=systems[i].name%></td>
+            <td><%=systems[i].type%></td>
+            <td><%=systems[i].category%></td>
+            <td><%=systems[i].favorite%></td>
+            <td><%=systems[i].kids%></td>
+        </tr>
+        <%}%>    
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Favorite</th>
+            <th>Kids</th>
+        </tr>
+    </tfoot>
+</table>                
 <!--img src="http://localhost:8080/static2/bezel.png"-->
 
-<!-- jQuery 2.2.3 -->
-<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
 
 <script>
 $('#system').on('change', function() {
     window.location = '/system/'+ $("#system").val();
 });
 
-
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
 </script>

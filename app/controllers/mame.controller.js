@@ -71,22 +71,10 @@ exports.random = function(req, res) {
 exports.gotoPage = (req, res) => {
     console.log('gotopage');
     var pageTogo = req.params.page;
-    if (pageTogo == 'searchPage') {
-        this.searchPage(req, res);
-    } else if (pageTogo == 'advancedSearchPage') {
+    if (pageTogo == 'advancedSearchPage') {
         this.advancedSearchPage(req, res);
     }
     
-};
-
-exports.searchPage = (req, res) => {
-    console.log('searchpage');
-    request({
-        url: 'http://localhost:3001/mame/api/categories/all', 
-        method: 'GET',
-    }, function(error, response, body){
-        res.render('mame/search', { title: 'Search Mame Machine', error: error, categories: JSON.parse(body) });
-    });    
 };
 
 exports.advancedSearchPage = (req, res) => {

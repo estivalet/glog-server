@@ -5,39 +5,95 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+
+    <style>
+        
+    </style>
 </head>
 <body>
 
-Advanced Search
 
-
-<form id="form" onsubmit="return false">
-    <select id="category" name="category">
-        <option></option>
-    <% for (var i = 0; i < categories.length; i++) { %>
-        <option><%=categories[i]%></option>
-    <%}%>    
-    </select>
-    
-    <select id="genre" name="genre">
-        <option></option>
-        <% for (var i = 0; i < genres.length; i++) { %>
-            <option><%=genres[i]%></option>
-        <%}%>    
-    </select>
-
-    <select id="manufacturer" name="manufacturer">
-        <option></option>
-        <% for (var i = 0; i < manufacturers.length; i++) { %>
-            <option><%=manufacturers[i]%></option>
-        <%}%>    
-    </select>
-
-    <input type="text" id="description" name="description"/>
-    <input type="checkbox" id="clones" name="clones"/> Include clones?
-    <button id="search">Pesquisar</button>
-</form>
-
+<div class="container">
+    <form id="form" class="form-horizontal" onsubmit="return false">
+        <div class="row">
+            <div class="col-xs-6">
+                <!-- Category -->
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Category</label>
+                    <div class="col-xs-10">
+                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <select id="category" name="category" class="form-control">
+                                <option></option>
+                                <% for (var i = 0; i < categories.length; i++) { %>
+                                <option><%=categories[i]%></option>
+                                <%}%>    
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Genre -->
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Genre</label>
+                    <div class="col-xs-10">
+                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <select id="genre" name="genre" class="form-control">
+                                <option></option>
+                                <% for (var i = 0; i < genres.length; i++) { %>
+                                <option><%=genres[i]%></option>
+                                <%}%>    
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manufacturer combo -->
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Manufacturer</label>
+                    <div class="col-xs-10">
+                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <select id="manufacturer" name="manufacturer" class="form-control">
+                                <option></option>
+                                <% for (var i = 0; i < manufacturers.length; i++) { %>
+                                <option><%=manufacturers[i]%></option>
+                                <%}%>    
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <!-- Manufacturer free text -->
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Manufacturer</label>
+                    <div class="col-xs-10">
+                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                            <input id="manufacturer_desc" name="manufacturer_desc" placeholder="Manufacturer" class="form-control" value="" type="text">
+                        </div>
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Description</label>
+                    <div class="col-xs-10">
+                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                            <input id="description" name="description" placeholder="Description" class="form-control" value="" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Additional search options -->
+            <label class="checkbox-inline">
+                <input type="checkbox" id="clones" name="clones">Include Clones
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="bios" name="bios">Include BIOS
+            </label>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <button id="search" class="btn btn-primary">Search</button>
+</div>
 
     <div class="container">
         <div class="row">
