@@ -115,6 +115,18 @@ exports.advancedSearchPage = (req, res) => {
                 }
             });    
         },
+        years: function(callback) {
+            request.get({
+                url: 'http://localhost:3001/mame/api/years/all',
+            }, function(error, response, body){
+                if(error) {
+                    console.log(error);
+                    callback(true, {});
+                } else {
+                    callback(null, body);
+                }
+            });    
+        },
         
     }, function(err, results){
             res.render('mame/advanced-search', 
@@ -122,7 +134,8 @@ exports.advancedSearchPage = (req, res) => {
                 , error: err
                 , categories: JSON.parse(results.categories) 
                 , genres: JSON.parse(results.genres) 
-                , manufacturers: JSON.parse(results.manufacturers) 
+                , manufacturers: JSON.parse(results.manufacturers)
+                , years: JSON.parse(results.years)
        });
     });
 };

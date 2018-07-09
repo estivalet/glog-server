@@ -91,6 +91,12 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <li>
+            <a href="/amcp">
+              <i class="fa fa-book"></i>
+              <span>AMCP</span>
+            </a>
+          </li>
+          <li>
             <a href="/#">
               <i class="fa fa-book"></i>
               <span>GLOGBox</span>
@@ -171,7 +177,7 @@
                       <div class="col-md-3">
                           <div class="form-group">
                               <label>Host</label>
-                              <input type="text" name="host" id="host" class="form-control" placeholder="retropie" value="retropie">
+                              <input type="text" name="host" id="host" class="form-control" placeholder="retropie" value="192.168.1.110">
                           </div>
                       </div>
                       <div class="col-md-3">
@@ -183,13 +189,13 @@
                       <div class="col-md-3">
                           <div class="form-group">
                               <label>Username</label>
-                              <input type="text" name="username" id="username" class="form-control" placeholder="pi" value="pi">
+                              <input type="text" name="username" id="username" class="form-control" placeholder="pi" value="luisoft">
                           </div>
                       </div>
                       <div class="col-md-3">
                           <div class="form-group">
                               <label>Password</label>
-                              <input type="text" name="password" id="password" class="form-control" placeholder="raspberry" value="raspberry">
+                              <input type="text" name="password" id="password" class="form-control" placeholder="raspberry" value="luisoft">
                           </div>
                       </div>
                   </div>
@@ -213,6 +219,9 @@
                                     </label>
                                     <label class="checkbox-inline">
                                       <input type="checkbox" id="video" name="video">Video
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="overwrite" name="overwrite">Overwrite
                                     </label>
                                   </div>
 

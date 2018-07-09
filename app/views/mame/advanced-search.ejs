@@ -1,190 +1,351 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MAMEDB</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
 
-    <style>
-        
-    </style>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/iCheck/flat/blue.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <style>
+    th {
+    	background-color: lightblue;
+	    color: black;
+    }
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+  
+  </style>
 </head>
-<body>
 
+<body class="hold-transition skin-blue sidebar-mini fixed">
+  <div class="wrapper">
 
-<div class="container">
-    <form id="form" class="form-horizontal" onsubmit="return false">
-        <div class="row">
-            <div class="col-xs-6">
-                <!-- Category -->
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="/index2.html" class="logo">
+        <span class="logo-lg">
+          <b>MAMEDB</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar" style="color:white">
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+        <div class="container-fluid">
+                <form id="form" class="form-group form-group-sm" onsubmit="return false">
                 <div class="form-group">
-                    <label class="control-label col-xs-2">Category</label>
-                    <div class="col-xs-10">
-                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <label>Category</label>
+                        <div class="input-group">
                             <select id="category" name="category" class="form-control">
                                 <option></option>
                                 <% for (var i = 0; i < categories.length; i++) { %>
-                                <option><%=categories[i]%></option>
-                                <%}%>    
+                                    <option><%=categories[i]%></option>
+                                    <%}%>
                             </select>
                         </div>
                     </div>
-                </div>
-                <!-- Genre -->
-                <div class="form-group">
-                    <label class="control-label col-xs-2">Genre</label>
-                    <div class="col-xs-10">
-                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                            <select id="genre" name="genre" class="form-control">
-                                <option></option>
-                                <% for (var i = 0; i < genres.length; i++) { %>
-                                <option><%=genres[i]%></option>
-                                <%}%>    
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <!-- Manufacturer combo -->
-                <div class="form-group">
-                    <label class="control-label col-xs-2">Manufacturer</label>
-                    <div class="col-xs-10">
-                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                            <select id="manufacturer" name="manufacturer" class="form-control">
-                                <option></option>
-                                <% for (var i = 0; i < manufacturers.length; i++) { %>
-                                <option><%=manufacturers[i]%></option>
-                                <%}%>    
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <!-- Manufacturer free text -->
-                <div class="form-group">
-                    <label class="control-label col-xs-2">Manufacturer</label>
-                    <div class="col-xs-10">
-                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <input id="manufacturer_desc" name="manufacturer_desc" placeholder="Manufacturer" class="form-control" value="" type="text">
-                        </div>
-                    </div>
-                </div>
-                <!-- Description -->
-                <div class="form-group">
-                    <label class="control-label col-xs-2">Description</label>
-                    <div class="col-xs-10">
-                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <input id="description" name="description" placeholder="Description" class="form-control" value="" type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Additional search options -->
-            <label class="checkbox-inline">
-                <input type="checkbox" id="clones" name="clones">Include Clones
-            </label>
-            <label class="checkbox-inline">
-                <input type="checkbox" id="bios" name="bios">Include BIOS
-            </label>
-        </div>
-    </form>
-    <p>&nbsp;</p>
-    <button id="search" class="btn btn-primary">Search</button>
-</div>
+              
 
-    <div class="container">
-        <div class="row">
-            <table id="tbl-result" class="table table-striped table-hover">
-                <caption>List of machines</caption>
-                <thead class="thead-light">
-                    <tr>
-                        <th>name</th>
-                        <th>title</th>
-                        <th>manufacturer</th>
-                        <th>year</th>
-                    </tr>
-                </thead>
-                <tbody id="tbl-body"></tbody>
-            </table>
-        </div>
+                    <!-- Genre -->
+                    <div class="form-group">
+                            <label>Genre</label>
+                            <div class="input-group">
+                                <select id="genre" name="genre" class="form-control">
+                                    <option></option>
+                                    <% for (var i = 0; i < genres.length; i++) { %>
+                                        <option><%=genres[i]%></option>
+                                        <%}%>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Manufacturer combo -->
+                        <div class="form-group">
+                            <label>Manufacturer</label>
+                            <div class="input-group">
+                                <select id="manufacturer" name="manufacturer" class="form-control">
+                                    <option></option>
+                                    <% for (var i = 0; i < manufacturers.length; i++) { %>
+                                        <option><%=manufacturers[i]%></option>
+                                        <%}%>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Manufacturer free text -->
+                        <div class="form-group">
+                            <label>Manufacturer</label>
+                            <div class="input-group">
+                                <input id="manufacturer_desc" name="manufacturer_desc" placeholder="Manufacturer" class="form-control" value="" type="text">
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <input id="description" name="description" placeholder="Description" class="form-control" value="" type="text">
+                            </div>
+                        </div>
+                        <!-- Years combo -->
+                        <div class="form-group">
+                            <label>Year</label>
+                            <div class="input-group">
+                                <select id="year" name="year" class="form-control">
+                                    <option></option>
+                                    <% for (var i = 0; i < years.length; i++) { %>
+                                        <option><%=years[i]%></option>
+                                        <%}%>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Source file -->
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div class="input-group">
+                                <input id="source_file" name="source_file" placeholder="Source file" class="form-control" value="" type="text">
+                            </div>
+                        </div>
+                        <!-- Driver status-->
+                        <div class="form-group">
+                            <label>Emulation</label>
+                            <div class="input-group">
+                                <select id="emulation" name="emulation" class="form-control">
+                                    <option></option>
+                                    <option value="good">good</option>
+                                    <option value="imperfect">imperfect</option>
+                                    <option value="preliminary">preliminary</option>
+                                    <option value="test">test</option>
+                                    <option value="unknown">unknown</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Additional search options -->
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="clones" name="clones">Include Clones
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="bios" name="bios">Include BIOS
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="mechanical" name="mechanical">Include Mechanical (Pinball)
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="softwarelist" name="softwarelist">Software List
+                        </label>
+                        <button id="search" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
 
-        <ul id="pagination" class="pagination text-center"></ul>
-    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper " id="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header ">
+      </section>
+
+      <!-- Main content -->
+      <section class="content" id="content">
+        
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary shadow">
+                <div class="box-header with-border">
+                    Machine List
+                </div>
+                <div class="box-body">
+                        <table id="tbl-result" class="table table-striped table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>name</th>
+                                        <th>title</th>
+                                        <th>manufacturer</th>
+                                        <th>year</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl-body"></tbody>
+                            </table>
+                    </div>
+                <div class="box-footer">
+                        <ul id="pagination" class="pagination text-center"></ul>
+                </div>
+              </div>
+            </div>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+            <p>bla</p>
+        </div>
+  
+
+ 
+
+      </section>
+      <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 2.3.7
+      </div>
+      <strong>Copyright &copy; 2014-2016
+        <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+    </footer>
 
-<script>
-function gotoPage(page) {
-    $.ajax({
-        url: '/mame/results/' + page,
-        type: 'POST',
-        dataType : 'json',
-        data : $("#form").serialize(), 
-        error: function() {
-            console.log('error');
-        },
-        success: function(data) {
-            // if a message returned then must be an error or no data found.
-            if (data.message) {
-                return;
-            }
 
-            $('#tbl-body').children().remove();
-            $('#pagination').children().remove();
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
 
-            // put data on table.
-            for(var i=0; i < data.machines.length; i++) {
-                var columns = '<td>' + data.machines[i].name + '</td>';
-                columns +=    '<td>' + data.machines[i].title + '</td>';
-                columns +=    '<td>' + data.machines[i].manufacturer + '</td>';
-                columns +=    '<td>' + data.machines[i].year + '</td>';
-                $('#tbl-result > tbody:last-child').append('<tr>' + columns + '</tr>');
-            }
+  <!-- jQuery 2.2.3 -->
+  <script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button);
+  </script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+  
+  <!-- Slimscroll -->
+  <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/app.min.js"></script>
 
-            // build pagination
-            if (data.pages > 0) {
-                if (data.current == 1) {
-                    $('#pagination').append('<li class="disabled"><a>First</a></li>');
-                } else {
-                    $('#pagination').append('<li><a onclick="gotoPage(1)">First</a></li>');
-                }
-                if (Number(data.current) - 1 > 0) {
-                    $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) - 1) + ')">Prev</a></li>');
-                }
-                var i = (Number(data.current) > 5 ? Number(data.current) - 4 : 1)
-                if (i !== 1) {
-                    $('#pagination').append('<li class="disabled"><a>...</a></li>');
-                }
-                for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) {
-                    if (i == data.current) {
-                        $('#pagination').append('<li class="active"><a>' + i + '</a></li>');
-                    } else {
-                        $('#pagination').append('<li><a onclick="gotoPage(' + i  + ')">' + i + '</a></li>');
+  <script>
+        function gotoPage(page) {
+            $.ajax({
+                url: '/mame/results/' + page,
+                type: 'POST',
+                dataType: 'json',
+                data: $("#form").serialize(),
+                error: function () {
+                    console.log('error');
+                },
+                success: function (data) {
+                    // if a message returned then must be an error or no data found.
+                    if (data.message) {
+                        return;
                     }
-                    if (i == Number(data.current) + 4 && i < data.pages) {
-                        $('#pagination').append('<li class="disabled"><a>...</a></li>');
+
+                    $('#tbl-body').children().remove();
+                    $('#pagination').children().remove();
+
+                    // put data on table.
+                    for (var i = 0; i < data.machines.length; i++) {
+                        var columns = '<td>' + data.machines[i].name + '</td>';
+                        columns += '<td>' + data.machines[i].title + '</td>';
+                        columns += '<td>' + data.machines[i].manufacturer + '</td>';
+                        columns += '<td>' + data.machines[i].year + '</td>';
+                        $('#tbl-result > tbody:last-child').append('<tr>' + columns + '</tr>');
                     }
-                }
-                if (Number(data.current) + 1 <= data.pages) {
-                    $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) + 1) + ')">Next</a></li>');
-                }
-                if (data.current == data.pages) {
-                    $('#pagination').append('<li class="disabled"><a>Last</a></li>');
-                } else {
-                    $('#pagination').append('<li><a onclick="gotoPage(' + data.pages + ')">Last</a></li>');
-                }
-            }
-        },
-    });    
 
-}
+                    // build pagination
+                    if (data.pages > 0) {
+                        if (data.current == 1) {
+                            $('#pagination').append('<li class="disabled"><a>First</a></li>');
+                        } else {
+                            $('#pagination').append('<li><a onclick="gotoPage(1)">First</a></li>');
+                        }
+                        if (Number(data.current) - 1 > 0) {
+                            $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) - 1) + ')">Prev</a></li>');
+                        }
+                        var i = (Number(data.current) > 5 ? Number(data.current) - 4 : 1)
+                        if (i !== 1) {
+                            $('#pagination').append('<li class="disabled"><a>...</a></li>');
+                        }
+                        for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) {
+                            if (i == data.current) {
+                                $('#pagination').append('<li class="active"><a>' + i + '</a></li>');
+                            } else {
+                                $('#pagination').append('<li><a onclick="gotoPage(' + i + ')">' + i + '</a></li>');
+                            }
+                            if (i == Number(data.current) + 4 && i < data.pages) {
+                                $('#pagination').append('<li class="disabled"><a>...</a></li>');
+                            }
+                        }
+                        if (Number(data.current) + 1 <= data.pages) {
+                            $('#pagination').append('<li><a onclick="gotoPage(' + (Number(data.current) + 1) + ')">Next</a></li>');
+                        }
+                        if (data.current == data.pages) {
+                            $('#pagination').append('<li class="disabled"><a>Last</a></li>');
+                        } else {
+                            $('#pagination').append('<li><a onclick="gotoPage(' + data.pages + ')">Last</a></li>');
+                        }
+                    }
+                },
+            });
 
-$('#search').click(function(event) {
-    gotoPage(1);
-});
-</script>
+        }
 
+        $('#search').click(function (event) {
+            gotoPage(1);
+        });
+    </script>
 </body>
+
 </html>
