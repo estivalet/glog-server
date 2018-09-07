@@ -11,7 +11,7 @@ exports.index = function(req, res) {
         // Retrieve GLOG systems from the GLOGDB API.
         systems: function(callback) {
             request.get({
-                url: 'http://localhost:3003/glog/system/all',
+                url: 'http://localhost:3000/glog/system/all',
             }, function(error, response, body){
                 if(error) {
                     callback(true, '{"error":"' + error + '"}');

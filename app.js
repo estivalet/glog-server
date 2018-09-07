@@ -6,7 +6,6 @@ var logger = require('morgan');
 var debug = require('debug')('glog-server:server');
 var http = require('http');
 
-var mame = require('./app/routes/mame.routes'); 
 var glog = require('./app/routes/glog.routes'); 
 
 var app = express();
@@ -21,8 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var staticResource='G:/glog/platform/';
 app.use('/public2', express.static(path.join(staticResource, 'public2')));
 
-app.use('/mame', mame);
 app.use('/', glog);
+require('./app/routes/system.routes.js')(app);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -102,6 +102,21 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// Configuring the database
+const dbConfig = require('./config/database.config.js');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+// Connecting to the database
+mongoose.connect(dbConfig.url)
+.then(() => {
+    console.log("Successfully connected to glogdb the database");    
+}).catch(err => {
+    console.log('Could not connect to the glogdb database. Exiting now...');
+    process.exit();
+});
 
 
 module.exports = app;
