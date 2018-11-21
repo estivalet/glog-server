@@ -1,0 +1,32 @@
+[
+	{
+		"title": "luminous sky",
+		"description": "another spectacular masterpiece of nature",
+		"image": "http://localhost:3000/images/Atari 2600/logo.png"
+	},
+	{
+		"title": "volcano valley",
+		"description": "",
+		"image": "https://luwes.github.io/js-cover-flow/media/IMG_0044.jpg"
+	},
+	{
+		"title": "sheep hill path",
+		"description": "",
+		"image": "https://luwes.github.io/js-cover-flow/media/DSC00435.jpg"
+	},
+	{
+		"title": "saw tooth ridge",
+		"description": "",
+		"image": "https://luwes.github.io/js-cover-flow/media/DSC00736.jpg"
+	},
+	{
+		"title": "winter long",
+		"description": "what a massive and unbelievable winter we're having!",
+		"image": "https://luwes.github.io/js-cover-flow/media/IMG_0028.jpg"
+	},
+	{
+		"title": "unreachable peak",
+		"description": "",
+		"image": "https://luwes.github.io/js-cover-flow/media/DSC01313.jpg"
+	}
+]

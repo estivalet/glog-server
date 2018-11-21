@@ -1,0 +1,41 @@
+<style>
+#layout {
+    background-color: black;
+}
+</style>
+
+<canvas id="layout" width="1920" height="1080"></canvas>
+<script>
+function ImageLoader(sources, callback) 
+{
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 0;
+
+    // get num of sources
+    for (var src in sources) {
+        numImages++;
+    }
+
+    for (var src in sources) {
+        images[src] = new Image();
+        images[src].onload = function() {
+
+            if (++loadedImages >= numImages) {
+                callback(images);
+            }
+        };
+        images[src].src = sources[src];
+    }
+}
+
+var sources = {
+    bg: images/layout/bg.jpg,
+};
+
+var _images = {};
+isReady = ImageLoader(sources, function(images) {
+    _images = images;
+});
+</script>
+Example: drawImage(_images.bg, 0, 0);

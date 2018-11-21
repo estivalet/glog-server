@@ -1,0 +1,133 @@
+<style>
+body {
+    margin: 0px;
+}
+
+</style>
+ <body >
+<canvas id="canvas" width="1248" height="702" style="z-index:12"></canvas>
+
+<div class="video-container">
+<video id="video1" width="645" height="345" autoplay muted style="position:absolute;left:455px;top:155px;">
+        <source src="images/Atari 2600/video.mp4" type='video/mp4'>
+      </video>
+    </div>      
+      
+    
+<script>
+
+var fitImageOn = function(canvas, imageObj) {
+	var imageAspectRatio = imageObj.width / imageObj.height;
+	var canvasAspectRatio = canvas.width / canvas.height;
+	var renderableHeight, renderableWidth, xStart, yStart;
+
+	// If image's aspect ratio is less than canvas's we fit on height
+	// and place the image centrally along width
+	if(imageAspectRatio < canvasAspectRatio) {
+		renderableHeight = canvas.height;
+		renderableWidth = imageObj.width * (renderableHeight / imageObj.height);
+		xStart = (canvas.width - renderableWidth) / 2;
+		yStart = 0;
+	}
+
+	// If image's aspect ratio is greater than canvas's we fit on width
+	// and place the image centrally along height
+	else if(imageAspectRatio > canvasAspectRatio) {
+		renderableWidth = canvas.width
+		renderableHeight = imageObj.height * (renderableWidth / imageObj.width);
+		xStart = 0;
+		yStart = (canvas.height - renderableHeight) / 2;
+	}
+
+	// Happy path - keep aspect ratio
+	else {
+		renderableHeight = canvas.height;
+		renderableWidth = canvas.width;
+		xStart = 0;
+		yStart = 0;
+	}
+	context.drawImage(imageObj, xStart, yStart, renderableWidth, renderableHeight);
+};
+    
+function loadImage(url) {
+  return new Promise((fulfill, reject) => {
+    let imageObj = new Image();
+    imageObj.src = url;
+    imageObj.onload = () => fulfill(imageObj);
+  });
+}
+
+function draw() {
+    //return;
+    var canvas = document.getElementById('canvas');
+  var w = canvas.width = document.body.clientWidth;
+  var h = canvas.height = document.body.clientHeight;
+  var ctx = canvas.getContext('2d');
+  var system = "Atari 2600";
+    Promise.all([
+        loadImage("images/bg.jpg"),
+        loadImage("images/menu.png"),
+        loadImage("images/top.png"),
+        loadImage("images/main_vidbg.png"),
+        loadImage("images/" + system + "/epcover.png"),
+        loadImage("images/" + system + "/eplogo.png"),
+        loadImage("images/" + system + "/controller.png"),
+        loadImage("images/" + system + "/eptop.png"),
+    ])
+    .then((images) => {
+        // draw images to canvas
+        ctx.drawImage(images[0], 0, 0, images[0].width,    images[0].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[1], 0, 0, images[1].width,    images[1].height,   570, 610, 350,80);
+        ctx.drawImage(images[2], 0, 0, images[2].width,    images[2].height,   550, 0, 400,120);
+        
+        ctx.drawImage(images[4], 0, 0, images[4].width,    images[4].height, 0,170,1548,320);
+
+        ctx.drawImage(images[3], 0, 0, images[3].width,    images[3].height,   360, 100, 840,450);
+
+        ctx.drawImage(images[5], 0, 0, images[5].width,    images[5].height, 0,560,460,156);
+        ctx.drawImage(images[6], 0, 0, images[6].width,    images[6].height, 630,450,250,250);
+        ctx.drawImage(images[7], 0, 0, images[7].width,    images[7].height, 550,700,400,126);
+    })
+    .catch( (e) => alert(e) );
+}
+
+draw();
+/*
+
+var v = document.getElementById("video1");
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var i;
+
+var video_width = v.offsetWidth;
+var video_height = v.offsetHeight;
+
+var ratio = video_width / video_height;
+
+var target_width;
+var target_height;
+var y_of_video = 0;
+var x_of_video = 0;
+
+if (video_width > video_height) {
+  target_width = c.width;
+  target_height = c.width / ratio;
+  y_of_video = (c.height - target_height) / 2;
+} else {
+  target_width = c.height;
+  target_height = c.height * ratio;
+
+  x_of_video = (c.width - target_width) / 2;
+}
+
+
+v.addEventListener("play", function () {
+  i = window.setInterval(function () {
+    ctx.drawImage(v, x_of_video, y_of_video, target_width, target_height);
+  }, 20);
+}, false);
+
+v.addEventListener("pause", function () {window.clearInterval(i);}, false);
+v.addEventListener("ended", function () {clearInterval(i);}, false);
+*/
+</script>

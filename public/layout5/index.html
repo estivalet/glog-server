@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cover Flow</title>
+	<link rel="stylesheet" href="coverflow.css"/>
+</head>
+<body>
+	<div id="container"></div>
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+	<script src="coverflow.js"></script>
+	<script>
+		function reset() {
+
+			coverflow('container').remove();
+			
+			//$('#container').coverflow({
+			coverflow('container').setup({
+				width: '100%',
+				height:500,
+				item: 1,
+				rotatedelay: 1000,
+				x:0,
+				// mousewheel: false,
+				// mode: 'flash',
+				// backgroundcolor: '009900',
+				// backgroundopacity: 0,
+				// wmode: 'transparent',
+				// gradientcolor: 'ff0000',
+				// showduration: true,
+				//playlist: 'playlist.json',
+				//playlist: 'http://api.flickr.com/services/feeds/groups_pool.gne?id=807213@N20&format=json&jsoncallback=?',
+				//route: {
+				// 	playlist: 'items',
+				// 	image: 'media.m'
+				//},
+				 playlist: [
+				 	{
+				 		"title": "snow-motion",
+				 		"description": "what a massive and unbelievable winter we're having!",
+				 		"image": "1.png",
+				 	},
+				 	{
+				 		"title": "driving rain",
+				 		"description": "",
+				 		"image": "2.png",
+				 	},
+				 	{
+				 		"title": "winter brook",
+				 		"description": "",
+				 		"image": "3.png"
+				 	},
+				 	{
+				 		"title": "snow-motion",
+				 		"description": "what a massive and unbelievable winter we're having!",
+				 		"image": "4.png",
+				 		"link": "http://www.google.com/",
+				 	},
+				 	{
+				 		"title": "driving rain",
+				 		"description": "",
+				 		"image": "5.png",
+				 	},
+             
+				 ],
+				coverwidth: 280,
+				coverheight: 350,
+				fixedsize: true,
+				//textoffset: 50,
+                //coverangle:0,
+                //covergap:70,
+                //coveroffset:200,
+			})
+			.on('ready', function() {
+
+				this.on('focus', function(index) {
+					document.getElementById('focusindex').innerHTML = index;
+				});
+				
+				this.on('click', function(index, link) {
+					document.getElementById('clickindex').innerHTML = index;
+					
+					console.log(link);
+					if (link) {
+						window.open(link, '_blank');
+					}
+				});
+			});
+		}
+
+		reset();
+
+	</script>
+
+<div style="width:480px;">
+	<div style="float:right;">Focused: <b id="focusindex">0</b> | Clicked: <b id="clickindex">0</b></div>
+	<p>
+		<a href="javascript:;" onclick="coverflow().left();">Left</a> - <a href="javascript:;" onclick="coverflow().right();">Right</a>
+	</p>
+	<p>
+		<a href="javascript:;" onclick="coverflow().prev();">Previous</a> - <a href="javascript:;" onclick="coverflow().next();">Next</a>
+	</p>
+	<p>
+		<input id="toval" value="0" size="1"> <a href="javascript:;" onclick="coverflow().to(document.getElementById('toval').value);">To</a>
+	</p>
+</div>
+
+<button onclick="reset();">Reset</button>
+<button onclick="coverflow().remove();">Remove</button>
+
+</body>
+</html>

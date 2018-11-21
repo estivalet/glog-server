@@ -10,4 +10,8 @@ router.get('/box', (req, res) => {
     res.render('glogbox');
 });
 
+router.get('/box2', (req, res) => {
+    res.render('box2');
+});
+
 module.exports = router;
