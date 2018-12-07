@@ -1,0 +1,77 @@
+<style>
+body {
+    margin: 0px;
+}
+</style>
+<canvas id="canvas" width="1248" height="702"></canvas>
+<script>
+
+var fitImageOn = function(canvas, imageObj) {
+	var imageAspectRatio = imageObj.width / imageObj.height;
+	var canvasAspectRatio = canvas.width / canvas.height;
+	var renderableHeight, renderableWidth, xStart, yStart;
+
+	// If image's aspect ratio is less than canvas's we fit on height
+	// and place the image centrally along width
+	if(imageAspectRatio < canvasAspectRatio) {
+		renderableHeight = canvas.height;
+		renderableWidth = imageObj.width * (renderableHeight / imageObj.height);
+		xStart = (canvas.width - renderableWidth) / 2;
+		yStart = 0;
+	}
+
+	// If image's aspect ratio is greater than canvas's we fit on width
+	// and place the image centrally along height
+	else if(imageAspectRatio > canvasAspectRatio) {
+		renderableWidth = canvas.width
+		renderableHeight = imageObj.height * (renderableWidth / imageObj.width);
+		xStart = 0;
+		yStart = (canvas.height - renderableHeight) / 2;
+	}
+
+	// Happy path - keep aspect ratio
+	else {
+		renderableHeight = canvas.height;
+		renderableWidth = canvas.width;
+		xStart = 0;
+		yStart = 0;
+	}
+	context.drawImage(imageObj, xStart, yStart, renderableWidth, renderableHeight);
+};
+    
+function loadImage(url) {
+  return new Promise((fulfill, reject) => {
+    let imageObj = new Image();
+    imageObj.src = url;
+    imageObj.onload = () => fulfill(imageObj);
+  });
+}
+
+function draw() {
+    var canvas = document.getElementById('canvas');
+  var w = canvas.width = document.body.clientWidth;
+  var h = canvas.height = document.body.clientHeight;
+  var ctx = canvas.getContext('2d');
+  var system = "Atari 2600.png";
+    Promise.all([
+        loadImage("back2.png"),
+        loadImage("wallpaper/" + system),
+        loadImage("back.png"),
+        loadImage("controller/" + system),
+        loadImage("mini/" + system),
+        loadImage("logo/" + system),
+    ])
+    .then((images) => {
+        // draw images to canvas
+        ctx.drawImage(images[0], 0, 0, images[0].width,    images[0].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[1], 0, 0, images[1].width,    images[1].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[2], 0, 0, images[2].width,    images[2].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[3], 0, 0, images[3].width,    images[3].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[4], 0, 0, images[4].width,    images[4].height,   0, 0, canvas.width, canvas.height);
+        ctx.drawImage(images[5], 0, 0, images[5].width,    images[5].height,   0, 0, canvas.width, canvas.height);
+    })
+    .catch( (e) => alert(e) );
+}
+
+draw();
+</script>

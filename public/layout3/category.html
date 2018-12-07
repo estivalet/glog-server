@@ -1,0 +1,166 @@
+<link rel="stylesheet" href="owl.carousel.min.css">
+<link rel="stylesheet" href="owl.theme.default.min.css">
+<style>
+body {
+    background-image: url("images/bg3.jpg");
+    margin: 0px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+#categories {
+    position: fixed;
+    top:651px;
+    left:0px;
+}
+
+#frame {
+    position: fixed;
+    top:0px;
+    left:330px;
+}
+
+#video {
+    position: fixed;
+    top:140px;
+    left:360px;
+}
+
+#image {
+    position: fixed;
+    top:78px;
+    left:427px;
+}
+</style>
+
+<!--
+<video id="video" width="960" height="540" autoplay>
+        <source src="../images/videos/Handhelds.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+-->
+
+      <div id="frame">
+            <img src="images/vidbg.png"/>
+        </div>
+        <div id="image"  style="width:640px;height:480px">
+            </div>
+        
+        
+<div id="categories" >
+        <div class="owl-carousel">
+            <div> <img src="../images/Boards.png"> </div>
+            <div> <img src="../images/Collections.png"> </div>
+            <div> <img src="../images/Computers.png"> </div>
+            <div> <img src="../images/Consoles.png"> </div>
+            <div> <img src="../images/Hacks.png"> </div>
+            <div> <img src="../images/Handhelds.png"> </div>
+            <div> <img src="../images/PCGames.png"> </div>
+            <div> <img src="../images/Pinballs.png"> </div>
+            <div> <img src="../images/Shmups.png"> </div>
+          </div>              
+        </div>
+<script src="../dist/js/jquery-3.1.1.min.js"></script>
+<script src="owl.carousel.min.js"></script>
+<script>
+$(document).ready(function(){
+
+
+
+var owl = $('.owl-carousel');
+owl.on('initialized.owl.carousel', function(event) {
+    console.log("initialized");
+    console.log("current: ",event.item.index) 
+                //reset transform for all item
+                $(".owl-item").css({
+                transform:"scale(0.8)",
+
+            });
+                        //add transform for 2nd active slide
+                        $(".active").eq(3).css({
+                transform:"scale(1)",
+                zIndex:3000,
+
+            });
+
+});
+
+owl.owlCarousel({
+center: true,
+items:7,
+loop:true,
+margin:0,
+
+/*
+responsive:{
+    600:{
+        items:4
+    }
+}*/
+
+
+});
+owl.on('translated.owl.carousel', function(event) {
+    console.log("TRANSLATED");
+            //add transform for 2nd active slide
+            $(".active").eq(3).css({
+                transform:"scale(1)",
+                zIndex:3000,
+                transition: "all .2s",
+
+            });
+
+            document.getElementById("image").style.backgroundImage='url(../images/backgrounds/bgConsole.jpg)';
+            document.getElementById("image").style.backgroundSize="640px 480px";
+        
+});
+
+owl.on('translate.owl.carousel', function(event) {
+    console.log("TRANSLATE");
+            //reset transform for all item
+            $(".owl-item").css({
+                transform:"scale(0.8)",
+                transition: "all .2s",
+            })
+        
+});
+
+
+owl.on('mousewheel', '.owl-stage', function (e) {
+    if (e.deltaY>0) {
+        owl.trigger('next.owl');
+    } else {
+        owl.trigger('prev.owl');
+    }
+    e.preventDefault();
+});
+
+/*keyboard navigation*/
+$(document.documentElement).keyup(function(event) {    
+    if (event.keyCode == 37) { /*left key*/
+        owl.trigger('prev.owl.carousel', [700]);
+    } else if (event.keyCode == 39) { /*right key*/
+        owl.trigger('next.owl.carousel', [700]);
+    }
+});
+
+$('.category').on('click', function(event){
+var $this = $(this);
+console.log($this);
+});
+
+owl.on('changed.owl.carousel', function (e) {
+    console.log("current: ",e.item.index) //same
+    if (("current: ",e.item.index == 0)){
+        console.log("page01");
+    } 
+    if (("current: ",e.item.index == 1)){
+        console.log("page02");
+    }                  
+})
+
+});    
+</script>

@@ -1,0 +1,72 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="owl.carousel.min.css">
+        <link rel="stylesheet" href="owl.theme.default.min.css">
+
+<style>
+ .owl-item img {
+width: 56%;
+margin: 0 auto;
+}
+</style>
+
+    </head>
+    <body>
+        <div style="width:1600px;height:256px">
+        <div class="owl-carousel">
+            <div class="category"> <img width="128" src="../images/Boards.png"> </div>
+            <div class="category"> <img src="../images/Collections.png"> </div>
+            <div class="category"> <img src="../images/Computers.png"> </div>
+            <div class="category"> <img src="../images/Consoles.png"> </div>
+            <div class="category"> <img src="../images/Hacks.png"> </div>
+            <div class="category"> <img src="../images/Handhelds.png"> </div>
+            <div class="category"> <img src="../images/PCGames.png"> </div>
+            <div class="category"> <img src="../images/Pinballs.png"> </div>
+            <div class="category"> <img src="../images/Shmups.png"> </div>
+          </div>              
+        </div>
+
+    </body>
+
+    <script src="../dist/js/jquery-3.1.1.min.js"></script>
+    <script src="owl.carousel.min.js"></script>
+    <script>
+$(document).ready(function(){
+
+
+
+    var owl = $('.owl-carousel');
+  owl.owlCarousel({
+    center: true,
+    items:6,
+    loop:true,
+    margin:10,
+    /*
+    responsive:{
+        600:{
+            items:4
+        }
+    }*/
+    });
+/*keyboard navigation*/
+$(document.documentElement).keyup(function(event) {    
+        if (event.keyCode == 37) { /*left key*/
+            owl.trigger('prev.owl.carousel', [700]);
+        } else if (event.keyCode == 39) { /*right key*/
+            owl.trigger('next.owl.carousel', [700]);
+        }
+    });
+
+$('.category').on('click', function(event){
+    var $this = $(this);
+    console.log($this);
+  });
+
+});    
+    </script>
+</html>
