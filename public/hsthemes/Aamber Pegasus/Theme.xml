@@ -1,0 +1,27 @@
+<Theme>
+    <video w="665.6"
+           h="491.6"
+           x="666"
+           y="322"
+           r="0"
+           rx="0"
+           ry="0"
+           below="true"
+           overlaybelow="false"
+           overlayoffsetx="0"
+           overlayoffsety="0"
+           forceaspect="both"
+           time="1"
+           delay="0"
+           bsize="0"
+           bsize2="0"
+           bsize3="0"
+           bcolor="0"
+           bcolor2="0"
+           bcolor3="0"
+           bshape="false"
+           type="tv zoom out"
+           start="top"
+           rest="none"/>
+    <artwork2 x="387" y="607" r="0" time="1" delay ="1" type="bounce" start="top" rest="none"/>
+</Theme>

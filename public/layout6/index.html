@@ -1,0 +1,126 @@
+<style>
+body {
+    width:  100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
+    display: block;    
+}
+
+#video-container {
+    position: absolute;
+    top: 157px;
+    left: 255px;
+    z-index: 1;
+    width: 745px; 
+    height: 588px;
+}
+
+#video {
+    position: absolute;
+    top: 210px;
+    left: 310px;
+    z-index: -9999;
+    width: 640px; 
+    height: 480px;
+}
+
+#logo {
+    z-index: 9999;
+    position: absolute;
+}
+
+#art1 {
+    z-index: 9999;
+    position: absolute;
+}
+
+#art2 {
+    z-index: 9999;
+    position: absolute;
+}
+
+</style>
+
+<body>
+
+<div id="logo"><img id="logo-image"/></div>
+
+<div id="video-container"></div>      
+
+<video id="video" autoplay muted>
+    <source id="video-mp4" type='video/mp4'>
+</video>
+
+<div id="art1"><img id="art1-image"/></div>
+<div id="art2"><img id="art2-image"/></div>
+</body>        
+
+<script>
+
+var systems = {
+    "Atari 2600" : {
+        "logo": { x: 410, y: 10 },
+        "art1": { x: 40, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+    "Atari 5200" : {
+        "logo": { x: 410, y: 10 },
+        "art1": { x: 40, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+    "Atari G1" : {
+        "logo": { x: 410, y: 10 },
+        "art1": { x: 40, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+    "Atari G42" : {
+        "logo": { x: 410, y: 10 },
+        "art1": { x: 40, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+    "Atari Jaguar" : {
+        "logo": { x: 410, y: 10 },
+        "art1": { x: 40, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+    "Atari ST" : {
+        "logo": { x: 240, y: 10 },
+        "art1": { x: -280, y: -100 },
+        "art2": { x: 710, y: 300 },
+    },
+    "Atari System 2" : {
+        "logo": { x: 130, y: 10 },
+        "art1": { x: 20, y: 50 },
+        "art2": { x: 710, y: 500 },
+    },
+}
+
+function draw() {
+    let searchParams = new URLSearchParams(window.location.search);
+    let system = searchParams.get('system');
+    let data = systems[system];
+
+    document.body.style.backgroundImage = "url('media/" + system + "/background.jpg')";
+    
+    document.getElementById("video-container").style.backgroundImage = "url('media/00_common/video.png')";
+    document.getElementById("video-mp4").src = "media/" + system + "/video.mp4";
+    
+    document.getElementById("logo-image").src = "media/" + system + "/logo.png";
+    document.getElementById("logo").style.left = data.logo.x + "px";
+    document.getElementById("logo").style.top = data.logo.y + "px";
+    
+    document.getElementById("art1-image").src = "media/" + system + "/art1.png";
+    document.getElementById("art1").style.left = data.art1.x + "px";
+    document.getElementById("art1").style.top = data.art1.y + "px";
+
+    document.getElementById("art2-image").src = "media/" + system + "/art2.png";
+    document.getElementById("art2").style.left = data.art2.x + "px";
+    document.getElementById("art2").style.top = data.art2.y + "px";
+}
+    
+draw();
+
+</script>
+    

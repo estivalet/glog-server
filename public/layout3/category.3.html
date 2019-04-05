@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slick Playground</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="./slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
+  <style type="text/css">
+    /*html, body {
+      margin: 0;
+      padding: 0;
+    }*/
+    html,body {
+    background-image: url("images/bg3.jpg");
+    margin: 0px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*overflow:hidden;*/
+}
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .slider {
+        width: 70%;
+        margin: 0px auto;
+    }
+
+    .slick-slide {
+      margin: 20px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      color: white;
+    }
+
+
+    .slick-slide {
+      transition: all ease-in-out .3s;
+      opacity: .2;
+    }
+
+    .slick-active {
+      opacity: .5;
+    }
+
+    .slick-current {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    #categories {
+    position: fixed;
+    top:0px;
+    left:0px;
+}
+.abs-container {
+  position:absolute;
+  
+  /*height:140px;*/
+  width:1500px;
+  top:665px;
+  left:0px;
+  margin:0px 0px 0px 0px;
+}
+
+#frame {
+    position: fixed;
+    top:0px;
+    left:330px;
+}
+#image {
+    position: fixed;
+    top:78px;
+    left:427px;
+}
+
+  </style>
+</head>
+<body>
+
+    <div id="frame">
+        <img src="images/vidbg.png"/>
+    </div>
+    <div id="image"  style="width:640px;height:480px">
+      </div>
+  
+  
+  <div class='abs-container'>
+  <div class="center slider">
+    <div>
+      <img src="../images/Arcade.png">
+    </div>
+    <div>
+      <img src="../images/Arcade Hardware.png">
+    </div>
+    <div>
+      <img src="../images/Arcade Manufacturer.png">
+    </div>
+    <div>
+      <img src="../images/Boards.png">
+    </div>
+    <div>
+      <img src="../images/Consoles.png">
+    </div>
+    <div>
+      <img src="../images/Collections.png">
+    </div>
+    <div>
+      <img src="../images/Computers.png">
+    </div>
+    <div>
+      <img src="../images/PCGames.png">
+    </div>
+    <div>
+      <img src="../images/Shmups.png">
+    </div>
+    <div>
+      <img src="../images/Hacks.png">
+    </div>
+    <div>
+      <img src="../images/Handhelds.png">
+    </div>
+    <div>
+      <img src="../images/Pinballs.png">
+    </div>
+    <div>
+      <img src="../images/Sports.png">
+    </div>
+  </div>
+
+</div>
+
+
+
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="./slick/slick.min.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).on('ready', function() {
+  
+      $(".center").slick({
+        dots: false,
+        infinite: true,
+        centerMode: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        arrow: true,
+      });
+
+$('.center').on('afterChange', function(event, slick, currentSlide){
+  console.log(currentSlide);
+  console.log(slick);
+  document.getElementById("image").style.backgroundImage='url(../images/backgrounds/' + currentSlide + '.jpg)';
+            document.getElementById("image").style.backgroundSize="640px 480px";
+
+});      
+
+var currentSlide = $('.center').slick('slickCurrentSlide');
+console.log(currentSlide);
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<Theme>
+    <video w="345"
+           h="263"
+           x="252"
+           y="402"
+           r="0"
+           rx="0"
+           ry="0"
+           below="false"
+           overlaybelow="true"
+           overlayoffsetx="259"
+           overlayoffsety="-19"
+           forceaspect="both"
+           time="1.5"
+           delay="0.5"
+           bsize="0"
+           bsize2="0"
+           bsize3="0"
+           bcolor="0"
+           bcolor2="0"
+           bcolor3="0"
+           bshape="false"
+           type="grow x"
+           start="bottom"
+           rest="none"/>
+    <artwork1 x="512" y="384" r="0" time="3" delay ="0.5" type="pixelate zoom out" start="none" rest="none"/>
+</Theme>

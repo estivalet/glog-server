@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta Http-Equiv="Cache-Control" Content="no-cache">
+<meta Http-Equiv="Pragma" Content="no-cache">
+<meta Http-Equiv="Expires" Content="0">
+<meta Http-Equiv="Pragma-directive: no-cache">
+<meta Http-Equiv="Cache-directive: no-cache">
+    <title></title>
+   <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script>
+
+    function preloadimages(arr){
+        console.log('images to load->' + arr.length);
+        var newimages=[], loadedimages=0
+        var postaction=function(){}
+        var arr=(typeof arr!="object")? [arr] : arr
+        function imageloadpost(){
+            loadedimages++
+            if (loadedimages==arr.length){
+                postaction(newimages) //call postaction and pass in newimages array as parameter
+            }
+        }
+        for (var i=0; i<arr.length; i++){
+            newimages[i]=new Image()
+            newimages[i].src=arr[i]
+            newimages[i].onload=function(){
+                imageloadpost();
+            }
+            newimages[i].onerror=function(err){
+                console.log('here->' + arr[i]);
+                imageloadpost();
+            }
+        }
+        return { //return blank object with done() method
+            done:function(f){
+                postaction=f || postaction //remember user defined callback functions to be called when images load
+            }
+        }
+    }
+    let searchParams = new URLSearchParams(window.location.search);
+    let system = searchParams.get('system');
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: system + "/Theme.xml",
+                dataType: "xml",
+                success: function (xml) {
+                	var artwork1_x;
+                	var artwork1_y;
+                	var artwork2_x;
+                	var artwork2_y;
+                	var artwork3_x;
+                	var artwork3_y;
+                	var artwork4_x;
+                	var artwork4_y;
+                	var video_w;
+                	var video_h;
+                	var video_x;
+                    var video_y;
+                    var video_overlayoffsetx;
+                    var video_overlayoffsety;
+                    var video_below;
+                    $(xml).find('video').each(function () {
+                        video_w = $(this).attr('w');
+                        video_h = $(this).attr('h');
+                        video_x = $(this).attr('x');
+                        video_y = $(this).attr('y');
+                        video_overlayoffsetx = $(this).attr('overlayoffsetx');
+                        if(!video_overlayoffsetx) {
+                            video_overlayoffsetx = 0;
+                        }
+                        video_overlayoffsety = $(this).attr('overlayoffsety');
+                        if(!video_overlayoffsety) {
+                            video_overlayoffsety = 0;
+                        }
+                        video_below = $(this).attr('below');
+                    });
+                    $(xml).find('artwork1').each(function () {
+                        artwork1_x = $(this).attr('x');
+                        artwork1_y = $(this).attr('y');
+                    });
+                    $(xml).find('artwork2').each(function () {
+                        artwork2_x = $(this).attr('x');
+                        artwork2_y = $(this).attr('y');
+                    });
+                    $(xml).find('artwork3').each(function () {
+                        artwork3_x = $(this).attr('x');
+                        artwork3_y = $(this).attr('y');
+                    });
+                    $(xml).find('artwork4').each(function () {
+                        artwork4_x = $(this).attr('x');
+                        artwork4_y = $(this).attr('y');
+                    });
+                    
+                    var canvas = document.createElement('canvas');
+
+                    canvas.id = "CursorLayer";
+                    canvas.width = 640;
+                    canvas.height = 480;
+                    canvas.style.zIndex = 8;
+                    canvas.style.position = "absolute";
+                    canvas.style.border = "1px solid";
+                    // All hyperspin themes are 1024x768;
+                    var ratio = 1024/canvas.width;
+
+                    var body = document.getElementsByTagName("body")[0];
+                    body.appendChild(canvas);
+
+                    cursorLayer = document.getElementById("CursorLayer");
+
+                    console.log(cursorLayer);
+
+                    var ctx = canvas.getContext("2d");
+                    ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+                    ctx.fillRect(100, 100, 200, 200);
+                    ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
+                    ctx.fillRect(150, 150, 200, 200);
+                    ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+                    ctx.fillRect(200, 50, 200, 200);
+                    
+                    
+                    array = [];
+                    array.push(system +'/Background.png');
+                    array.push(system +'/Artwork1.png');
+                    array.push(system +'/Artwork2.png');
+                    array.push(system +'/Artwork3.png');
+                    array.push(system +'/Artwork4.png');
+                    array.push(system +'/Video.png');
+
+                    preloadimages(array).done(function(images){
+                        console.log(images[0]);
+                        console.log(video_overlayoffsetx);
+                        ctx.drawImage(images[0], 0, 0,canvas.width,canvas.height);
+                        ctx.drawImage(images[1], artwork1_x/ratio-images[1].width/2/ratio,artwork1_y/ratio-images[1].height/2/ratio,images[1].width/ratio, images[1].height/ratio);
+                        ctx.drawImage(images[5], video_x/ratio-images[5].width/2/ratio+video_overlayoffsetx/ratio,video_y/ratio-images[5].height/2/ratio,images[5].width/ratio, images[5].height/ratio+video_overlayoffsety/ratio);
+                        ctx.drawImage(images[2], artwork2_x/ratio-images[2].width/2/ratio,artwork2_y/ratio-images[2].height/2/ratio,images[2].width/ratio, images[2].height/ratio);
+                        ctx.drawImage(images[3], artwork3_x/ratio-images[3].width/2/ratio,artwork3_y/ratio-images[3].height/2/ratio,images[3].width/ratio, images[3].height/ratio);
+                        ctx.drawImage(images[4], artwork4_x/ratio-images[4].width/2/ratio,artwork4_y/ratio-images[4].height/2/ratio,images[4].width/ratio, images[4].height/ratio);
+                       });    
+
+                }
+            });
+        });
+    </script>
+</head>

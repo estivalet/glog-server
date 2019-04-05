@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-const System = require('../models/system.model.js');
+const models = require('../models/schema.model.js');
 
 /**
  * Get all systems.
@@ -9,9 +9,8 @@ const System = require('../models/system.model.js');
  * @param {Response} res 
  */
 exports.findAllSystems = (req, res) => {
-    System.find()
+    models.System.find()
     .then(systems => {
-        console.log('sys-->' + systems);
         res.send(JSON.stringify(systems.sort()));
     }).catch(err => {
         res.status(500).send({

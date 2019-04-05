@@ -1,0 +1,30 @@
+<Theme>
+    <video w="469.3"
+           h="352"
+           x="295"
+           y="341"
+           r="0"
+           rx="0"
+           ry="0"
+           below="false"
+           overlaybelow="false"
+           overlayoffsetx="0"
+           overlayoffsety="0"
+           forceaspect="none"
+           time="1"
+           delay="0.5"
+           bsize="0"
+           bsize2="0"
+           bsize3="0"
+           bcolor="0"
+           bcolor2="0"
+           bcolor3="0"
+           bshape="false"
+           type="none"
+           start="none"
+           rest="none"/>
+    <artwork1 x="148" y="665" r="0" time="1" delay ="0.5" type="none" start="bottom" rest="none"/>
+    <artwork2 x="742" y="73" r="0" time="1.2" delay ="0.8" type="fade" start="none" rest="none"/>
+    <artwork3 x="696" y="552" r="22" time="1.5" delay ="1" type="none" start="right" rest="hover"/>
+    <artwork4 x="172" y="630" r="0" time="1" delay ="0.5" type="bounce random" start="none" rest="none"/>
+</Theme>

@@ -1,0 +1,8 @@
+<Theme>
+    <video w="380" h="263" x="355" y="428"            below="true"
+           overlaybelow="true" r="-5" time="1.5" bcolor="14090497" bsize="0" bshape="round" type="fade" start="none"  />
+    <artwork2 x="512" y="384" r="0" delay="1" time="2" type="fade" start="none"  />
+    <artwork3 x="532" y="345" r="0" delay="0.6" time="1.7" type="elastic bounce" start="bottom" rest="hover"  />
+    <artwork1 x="512" y="384" r="0" delay="0.2" time="0.6" type="fade" start="none"  />
+     <artwork4 x="512" y="375" r="0" delay="2" time="2" type="ease" start="top"  />
+</Theme>
